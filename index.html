@@ -7,179 +7,275 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: #f1f1f1;
             margin: 0;
             padding: 0;
+            color: #333;
         }
+
         header {
-            background-color: #1e2a3a;
-            color: white;
+            background-color: #1abc9c;
             padding: 20px;
             text-align: center;
+            color: white;
         }
+
         header h1 {
-            margin: 0;
             font-size: 2.5em;
+            margin: 0;
         }
+
         header p {
             font-size: 1.2em;
+            margin-top: 10px;
         }
-        section {
-            padding: 40px;
-        }
-        .feature-card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            padding: 20px;
-            text-align: center;
-            width: 30%;
-            float: left;
-            transition: transform 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        .feature-card h3 {
-            font-size: 1.6em;
-            color: #1e2a3a;
-        }
-        .feature-card p {
-            font-size: 1em;
-            color: #666;
-        }
-        .form-container {
-            background-color: #fff;
-            border-radius: 10px;
+
+        main {
             padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 50%;
-            margin-left: auto;
-            margin-right: auto;
         }
-        .form-container input, .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+
+        #about, #sensor-data, #sensor-control, #alerts {
+            margin-bottom: 50px;
         }
-        .form-container button {
-            background-color: #1e2a3a;
+
+        #sensorDataContainer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sensor-card {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            border-radius: 8px;
+        }
+
+        .sensor-card h3 {
+            font-size: 1.5em;
+        }
+
+        .sensor-card p {
+            font-size: 1.2em;
+        }
+
+        #sensor-control button {
+            padding: 15px 30px;
+            background-color: #3498db;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            margin-right: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .form-container button:hover {
-            background-color: #3498db;
+
+        #sensor-control button:hover {
+            background-color: #2980b9;
         }
+
+        #sensor-control button:disabled {
+            background-color: #7f8c8d;
+            cursor: not-allowed;
+        }
+
         footer {
-            background-color: #1e2a3a;
-            color: white;
-            text-align: center;
+            background-color: #1abc9c;
             padding: 20px;
-            position: relative;
+            text-align: center;
+            color: white;
+            position: absolute;
             bottom: 0;
             width: 100%;
         }
-        .chatbot {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+
+        .alert-card {
+            background-color: #f39c12;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .alert-card.error {
+            background-color: #e74c3c;
+        }
+
+        .alert-card.success {
+            background-color: #2ecc71;
+        }
+
+        #deviceStatusContainer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .device-status {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            width: 45%;
+            text-align: center;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .device-status h3 {
+            font-size: 1.8em;
+        }
+
+        .device-status p {
+            font-size: 1.5em;
+        }
+
+        .device-status button {
+            margin-top: 20px;
+            padding: 10px 25px;
             background-color: #3498db;
             color: white;
-            padding: 15px 25px;
-            border-radius: 50%;
-            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
             cursor: pointer;
         }
+
+        .device-status button:hover {
+            background-color: #2980b9;
+        }
+
     </style>
 </head>
 <body>
-
     <header>
-        <h1>AI-Powered Home Automation System</h1>
-        <p>Control Your Home with AI and IoT Devices</p>
+        <div class="header-container">
+            <h1>AI-Powered Home Automation System</h1>
+            <p>Real-time Data Collection from Home Sensors</p>
+        </div>
     </header>
 
-    <section>
-        <h2>How It Works</h2>
-        <p>Our AI-powered system uses advanced algorithms to automate various tasks in your home, such as controlling lights, adjusting the thermostat, and securing your home with intelligent sensors.</p>
+    <main>
+        <section id="about">
+            <h2>About the System</h2>
+            <p>This AI-powered home automation system uses sensor data to provide real-time monitoring and control of your home devices, optimizing your living environment for comfort, energy efficiency, and security.</p>
+        </section>
 
-        <div class="feature-card">
-            <h3>Smart Lighting</h3>
-            <p>Automatically adjust the brightness based on the time of day and your preferences.</p>
-        </div>
+        <section id="sensor-data">
+            <h2>Sensor Data</h2>
+            <div id="sensorDataContainer">
+                <div class="sensor-card">
+                    <h3>Temperature</h3>
+                    <p id="tempData">Loading...</p>
+                </div>
+                <div class="sensor-card">
+                    <h3>Humidity</h3>
+                    <p id="humidityData">Loading...</p>
+                </div>
+                <div class="sensor-card">
+                    <h3>Motion</h3>
+                    <p id="motionData">Loading...</p>
+                </div>
+            </div>
+        </section>
 
-        <div class="feature-card">
-            <h3>Temperature Control</h3>
-            <p>AI adjusts your home's temperature for optimal comfort and energy efficiency.</p>
-        </div>
+        <section id="sensor-control">
+            <h2>Control Home Devices</h2>
+            <div id="deviceStatusContainer">
+                <div class="device-status" id="lightStatus">
+                    <h3>Lights</h3>
+                    <p id="lightState">Off</p>
+                    <button id="turnOnLights">Turn On</button>
+                    <button id="turnOffLights" disabled>Turn Off</button>
+                </div>
+                <div class="device-status" id="fanStatus">
+                    <h3>Fan</h3>
+                    <p id="fanState">Off</p>
+                    <button id="turnOnFan">Turn On</button>
+                    <button id="turnOffFan" disabled>Turn Off</button>
+                </div>
+            </div>
+        </section>
 
-        <div class="feature-card">
-            <h3>Security System</h3>
-            <p>Keep your home safe with AI-powered motion detection and camera monitoring.</p>
-        </div>
-
-        <div style="clear: both;"></div>
-
-        <h2>Live Demo</h2>
-        <p>Interact with the system and control devices in real-time. (This section would ideally connect to a live demo if implemented with hardware.)</p>
-
-        <!-- Example of device control buttons (this would connect to real devices if integrated) -->
-        <button onclick="controlDevice('lights')">Toggle Lights</button>
-        <button onclick="controlDevice('thermostat')">Adjust Temperature</button>
-        <button onclick="controlDevice('security')">Activate Security System</button>
-    </section>
-
-    <section>
-        <h2>Register for Your Home Automation Setup</h2>
-        <div class="form-container">
-            <form id="register-form">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="address">Home Address</label>
-                <textarea id="address" name="address" rows="4" required></textarea>
-
-                <button type="submit">Register</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- AI Chatbot -->
-    <div class="chatbot" onclick="openChat()">💬</div>
+        <section id="alerts">
+            <h2>Alerts</h2>
+            <div id="alertMessages"></div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2025 AI-Powered Home Automation System. All Rights Reserved.</p>
     </footer>
 
     <script>
-        function controlDevice(device) {
-            // Placeholder for device control logic (would be connected to real devices)
-            alert('Controlling ' + device + '...');
+        // Simulated sensor data (replace with actual sensor data through HTTP)
+        function getSensorData() {
+            // Simulate fetching data from the sensors via HTTP (you can use your own API here)
+            // This is just a placeholder, replace with actual data from your sensors
+            const simulatedData = {
+                temperature: (Math.random() * 5 + 22).toFixed(2), // Random temp between 22 and 27
+                humidity: (Math.random() * 30 + 40).toFixed(2),  // Random humidity between 40% and 70%
+                motion: Math.random() > 0.5,  // Simulate motion detection
+            };
+
+            // Update the DOM with the simulated data
+            document.getElementById('tempData').textContent = simulatedData.temperature + ' °C';
+            document.getElementById('humidityData').textContent = simulatedData.humidity + ' %';
+            document.getElementById('motionData').textContent = simulatedData.motion ? 'Motion Detected' : 'No Motion';
+
+            // Check for critical temperature
+            if (simulatedData.temperature > 28) {
+                showAlert('High Temperature Alert: ' + simulatedData.temperature + '°C!', 'error');
+            }
         }
 
-        function openChat() {
-            // Placeholder for opening a chatbot interface
-            alert('AI Assistant: How can I help you today?');
-        }
-
-        // Registration form handling (add actual backend logic)
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for registering. We will contact you soon!');
+        // Control device buttons (simulate turning on and off lights/fans)
+        document.getElementById('turnOnLights').addEventListener('click', function() {
+            // Simulate sending an HTTP request to turn on lights
+            document.getElementById('lightState').textContent = 'On';
+            document.getElementById('turnOnLights').disabled = true;
+            document.getElementById('turnOffLights').disabled = false;
+            showAlert('Lights are now On.', 'success');
         });
+
+        document.getElementById('turnOffLights').addEventListener('click', function() {
+            // Simulate sending an HTTP request to turn off lights
+            document.getElementById('lightState').textContent = 'Off';
+            document.getElementById('turnOffLights').disabled = true;
+            document.getElementById('turnOnLights').disabled = false;
+            showAlert('Lights are now Off.', 'success');
+        });
+
+        document.getElementById('turnOnFan').addEventListener('click', function() {
+            // Simulate sending an HTTP request to turn on fan
+            document.getElementById('fanState').textContent = 'On';
+            document.getElementById('turnOnFan').disabled = true;
+            document.getElementById('turnOffFan').disabled = false;
+            showAlert('Fan is now On.', 'success');
+        });
+
+        document.getElementById('turnOffFan').addEventListener('click', function() {
+            // Simulate sending an HTTP request to turn off fan
+            document.getElementById('fanState').textContent = 'Off';
+            document.getElementById('turnOffFan').disabled = true;
+            document.getElementById('turnOnFan').disabled = false;
+            showAlert('Fan is now Off.', 'success');
+        });
+
+        // Function to display alerts
+        function showAlert(message, type) {
+            const alertBox = document.createElement('div');
+            alertBox.className = 'alert-card ' + type;
+            alertBox.textContent = message;
+            document.getElementById('alertMessages').prepend(alertBox);
+            setTimeout(() => {
+                alertBox.remove();
+            }, 5000);
+        }
+
+        // Initialize sensor data retrieval every 5 seconds
+        setInterval(getSensorData, 5000);  // Fetch new data every 5 seconds
+
     </script>
 </body>
 </html>
-
