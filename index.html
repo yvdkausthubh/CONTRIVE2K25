@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart IoT, AI, and VLSI Integration</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header Section */
+        #header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        #header h1 {
+            font-size: 3em;
+        }
+
+        #header p {
+            font-size: 1.5em;
+        }
+
+        /* Data Analysis Section */
+        #data-analysis {
+            background-color: #f0f8ff;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #data-analysis h2 {
+            font-size: 2.5em;
+            color: #8B0000; /* Chardola */
+            margin-bottom: 20px;
+        }
+
+        .data-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .data-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .data-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .data-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #FFD700; /* Gold */
+        }
+
+        .data-card canvas {
+            width: 100%;
+            height: 250px;
+        }
+
+        /* Footer Section */
+        #footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #footer p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="header">
+        <h1>Smart IoT, AI, and VLSI Integration</h1>
+        <p>Bringing IoT, AI, and VLSI together for smarter predictions and analysis</p>
+    </header>
+
+    <!-- Data Analysis Section -->
+    <section id="data-analysis" class="section">
+        <h2>Data Analysis & Insights</h2>
+        <p>We leverage advanced data analysis, AI models, and VLSI simulation results to extract insights from real-time IoT data.</p>
+        
+        <div class="data-section">
+            <!-- Temperature Data -->
+            <div class="data-card">
+                <h3>Temperature Analysis</h3>
+                <canvas id="temperature-chart"></canvas>
+                <p id="temperature-prediction">Predicted Temperature: --°C</p>
+            </div>
+
+            <!-- Flow Data -->
+            <div class="data-card">
+                <h3>Flow Analysis</h3>
+                <canvas id="flow-chart"></canvas>
+            </div>
+
+            <!-- VLSI Simulation Data -->
+            <div class="data-card">
+                <h3>VLSI Simulation Results</h3>
+                <p id="vlsi-status">Fetching VLSI Simulation Results...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <p>&copy; 2025 Smart IoT, AI & VLSI Integration. All Rights Reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Placeholder VLSI simulation results (You can replace it with actual simulation data)
+        function fetchVLSIData() {
+            let vlsiResults = [
+                "Logic Gate 1: Passed",
+                "Logic Gate 2: Failed",
+                "Chip Status: Operational"
+            ];
+            
+            // Simulate fetching VLSI data
+            let result = vlsiResults[Math.floor(Math.random() * vlsiResults.length)];
+            document.getElementById('vlsi-status').textContent = result;
+        }
+
+        // Live Data Fetching (Simulating fetching data from connected devices)
+        function fetchLiveData() {
+            // Simulate live data for temperature and flow sensors
+            let temperature = [22, 24, 28, 25, 23, Math.floor(Math.random() * (30 - 20 + 1)) + 20]; // Add new temp value
+            let flow = [10, 12, 15, 11, 13, Math.floor(Math.random() * (20 - 10 + 1)) + 10]; // Add new flow value
+
+            // Update the charts with live data
+            updateCharts(temperature, flow);
+            makePrediction(temperature);
+        }
+
+        // Linear Regression for Temperature Prediction
+        function linearRegression(data) {
+            let n = data.length;
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+
+            // Calculate sums
+            for (let i = 0; i < n; i++) {
+                sumX += i; // Time in hours (simplified as index)
+                sumY += data[i]; // Temperature data
+                sumXY += i * data[i];
+                sumX2 += i * i;
+            }
+
+            // Calculate slope (m) and intercept (b)
+            let m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            let b = (sumY - m * sumX) / n;
+
+            return { m, b };
+        }
+
+        // Making Prediction for next value using linear regression
+        function makePrediction(temperatureData) {
+            const { m, b } = linearRegression(temperatureData);
+            const nextHour = temperatureData.length; // Predict for the next hour
+            const predictedTemp = m * nextHour + b;
+            document.getElementById('temperature-prediction').textContent = `Predicted Temperature: ${predictedTemp.toFixed(2)}°C`;
+        }
+
+        // Data Visualization: Using Chart.js for sensor data (temperature and flow)
+        const temperatureData = {
+            labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: [22, 24, 28, 25, 23],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        };
+
+        const flowData = {
+            labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
+            datasets: [{
+                label: 'Flow Rate (L/min)',
+                data: [10, 12, 15, 11, 13],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        };
+
+        // Update the charts with live data
+        function updateCharts(temperature, flow) {
+            temperatureChart.data.datasets[0].data = temperature;
+            flowChart.data.datasets[0].data = flow;
+            temperatureChart.update();
+            flowChart.update();
+        }
+
+        // Create the charts
+        let temperatureChart = new Chart(document.getElementById('temperature-chart'), {
+            type: 'line',
+            data: temperatureData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        }
+                    }
+                }
+            }
+        });
+
+        let flowChart = new Chart(document.getElementById('flow-chart'), {
+            type: 'line',
+            data: flowData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Flow Rate (L/min)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Fetch VLSI data and live sensor data periodically (every 5 seconds)
+        setInterval(function() {
+            fetchVLSIData();
+            fetchLiveData();
+        }, 5000); // Update every 5 seconds
+    </script>
+</body>
+</html>
