@@ -137,6 +137,22 @@
             color: #000;
         }
 
+        /* Button Styling */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
             #header h1 {
@@ -318,42 +334,4 @@
             datasets: [{
                 label: 'Flow Rate (L/min)',
                 data: [10, 12, 15, 11, 13],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false,
-                tension: 0.1
-            }]
-        };
-
-        let temperatureChart = new Chart(document.getElementById('temperature-chart'), {
-            type: 'line',
-            data: temperatureData,
-            options: { responsive: true, scales: { x: { title: { display: true, text: 'Time' } }, y: { title: { display: true, text: 'Temperature (°C)' } } } }
-        });
-
-        let flowChart = new Chart(document.getElementById('flow-chart'), {
-            type: 'line',
-            data: flowData,
-            options: { responsive: true, scales: { x: { title: { display: true, text: 'Time' } }, y: { title: { display: true, text: 'Flow Rate (L/min)' } } } }
-        });
-
-        setInterval(fetchLiveData, 5000); // Fetch new data every 5 seconds
-        setInterval(fetchVLSIData, 10000); // Simulate fetching VLSI data every 10 seconds
-
-        // Exporting data function
-        function exportData() {
-            let data = [["Time", "Temperature", "Flow"]];
-            temperatureData.labels.forEach((label, index) => {
-                data.push([label, temperatureData.datasets[0].data[index], flowData.datasets[0].data[index]]);
-            });
-
-            let csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
-            let encodedUri = encodeURI(csvContent);
-            let link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "sensor_data.csv");
-            document.body.appendChild(link);
-            link.click();
-        }
-    </script>
-</body>
-</html>
+                borderColor: 'rgba(54, 162,
