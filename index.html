@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Powered Home Automation System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,6 +50,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 30%;
             border-radius: 8px;
+            text-align: center;
         }
 
         .sensor-card h3 {
@@ -80,36 +82,9 @@
             cursor: not-allowed;
         }
 
-        footer {
-            background-color: #1abc9c;
-            padding: 20px;
-            text-align: center;
-            color: white;
-            position: absolute;
-            bottom: 0;
+        .sensor-card .pie-chart {
             width: 100%;
-        }
-
-        .alert-card {
-            background-color: #f39c12;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .alert-card.error {
-            background-color: #e74c3c;
-        }
-
-        .alert-card.success {
-            background-color: #2ecc71;
-        }
-
-        #deviceStatusContainer {
-            display: flex;
-            justify-content: space-between;
+            height: 200px;
         }
 
         .device-status {
@@ -145,6 +120,40 @@
             background-color: #2980b9;
         }
 
+        .device-status button:active {
+            transform: scale(0.95);
+        }
+
+        .alert-card {
+            background-color: #f39c12;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .alert-card.error {
+            background-color: #e74c3c;
+        }
+
+        .alert-card.success {
+            background-color: #2ecc71;
+        }
+
+        .animated-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .animated-icon.on {
+            transform: rotate(360deg);
+        }
+
+        .animated-icon.off {
+            transform: rotate(0deg);
+        }
+
     </style>
 </head>
 <body>
@@ -167,14 +176,17 @@
                 <div class="sensor-card">
                     <h3>Temperature</h3>
                     <p id="tempData">Loading...</p>
+                    <canvas id="tempChart" class="pie-chart"></canvas>
                 </div>
                 <div class="sensor-card">
                     <h3>Humidity</h3>
                     <p id="humidityData">Loading...</p>
+                    <canvas id="humidityChart" class="pie-chart"></canvas>
                 </div>
                 <div class="sensor-card">
                     <h3>Motion</h3>
                     <p id="motionData">Loading...</p>
+                    <div id="motionIcon" class="animated-icon">🚶</div>
                 </div>
             </div>
         </section>
@@ -202,6 +214,7 @@
             <div id="alertMessages"></div>
         </section>
     </main>
+
     <script>
         // Simulated sensor data (replace with actual sensor data through HTTP)
         function getSensorData() {
@@ -218,10 +231,49 @@
             document.getElementById('humidityData').textContent = simulatedData.humidity + ' %';
             document.getElementById('motionData').textContent = simulatedData.motion ? 'Motion Detected' : 'No Motion';
 
+            // Update Pie Charts
+            updatePieChart('tempChart', simulatedData.temperature);
+            updatePieChart('humidityChart', simulatedData.humidity);
+
+            // Update motion icon animation
+            const motionIcon = document.getElementById('motionIcon');
+            if (simulatedData.motion) {
+                motionIcon.classList.add('on');
+                motionIcon.classList.remove('off');
+            } else {
+                motionIcon.classList.add('off');
+                motionIcon.classList.remove('on');
+            }
+
             // Check for critical temperature
             if (simulatedData.temperature > 28) {
                 showAlert('High Temperature Alert: ' + simulatedData.temperature + '°C!', 'error');
             }
+        }
+
+        // Pie chart creation
+        function updatePieChart(canvasId, value) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const data = {
+                labels: ['Value', 'Remaining'],
+                datasets: [{
+                    data: [value, 100 - value],
+                    backgroundColor: ['#3498db', '#ecf0f1'],
+                    borderWidth: 0
+                }]
+            };
+            const options = {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            };
+            new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
         }
 
         // Control device buttons (simulate turning on and off lights/fans)
