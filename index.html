@@ -51,6 +51,7 @@
 
         .data-section {
             display: flex;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
             justify-content: space-around;
             margin-top: 30px;
             gap: 20px;
@@ -93,6 +94,49 @@
 
         #footer p {
             font-size: 1.2em;
+        }
+
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 768px) {
+            #header h1 {
+                font-size: 2em;
+            }
+
+            #header p {
+                font-size: 1.2em;
+            }
+
+            .data-card {
+                width: 100%;
+                margin-bottom: 20px; /* Adjust gap between cards */
+            }
+
+            .data-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #data-analysis h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #header h1 {
+                font-size: 1.5em;
+            }
+
+            #header p {
+                font-size: 1em;
+            }
+
+            #footer p {
+                font-size: 1em;
+            }
+
+            .data-card h3 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
@@ -265,11 +309,10 @@
             }
         });
 
-        // Fetch VLSI data and live sensor data periodically (every 5 seconds)
-        setInterval(function() {
-            fetchVLSIData();
-            fetchLiveData();
-        }, 5000); // Update every 5 seconds
+        // Start fetching live data and update the results
+        setInterval(fetchLiveData, 5000); // Fetch new data every 5 seconds
+        setInterval(fetchVLSIData, 10000); // Simulate fetching VLSI data every 10 seconds
+
     </script>
 </body>
 </html>
