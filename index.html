@@ -1,328 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered Home Automation System</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background-color: #1abc9c;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-
-        header p {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        main {
-            padding: 30px;
-        }
-
-        #about, #sensor-data, #sensor-control, #alerts {
-            margin-bottom: 50px;
-        }
-
-        #sensorDataContainer {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .sensor-card {
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 30%;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .sensor-card h3 {
-            font-size: 1.5em;
-        }
-
-        .sensor-card p {
-            font-size: 1.2em;
-        }
-
-        #sensor-control button {
-            padding: 15px 30px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2em;
-            margin-right: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        #sensor-control button:hover {
-            background-color: #2980b9;
-        }
-
-        #sensor-control button:disabled {
-            background-color: #7f8c8d;
-            cursor: not-allowed;
-        }
-
-        .sensor-card .pie-chart {
-            width: 100%;
-            height: 200px;
-        }
-
-        .device-status {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            width: 45%;
-            text-align: center;
-            font-size: 1.2em;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .device-status h3 {
-            font-size: 1.8em;
-        }
-
-        .device-status p {
-            font-size: 1.5em;
-        }
-
-        .device-status button {
-            margin-top: 20px;
-            padding: 10px 25px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-        .device-status button:hover {
-            background-color: #2980b9;
-        }
-
-        .device-status button:active {
-            transform: scale(0.95);
-        }
-
-        .alert-card {
-            background-color: #f39c12;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .alert-card.error {
-            background-color: #e74c3c;
-        }
-
-        .alert-card.success {
-            background-color: #2ecc71;
-        }
-
-        .animated-icon {
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        .animated-icon.on {
-            transform: rotate(360deg);
-        }
-
-        .animated-icon.off {
-            transform: rotate(0deg);
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32 Camera and Audio Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    #videoStream {
+      width: 100%;
+      max-width: 640px;
+      border: 1px solid #ddd;
+    }
+    #audioControls {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #infoText {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <h1>AI-Powered Home Automation System</h1>
-            <p>Real-time Data Collection from Home Sensors</p>
-        </div>
-    </header>
 
-    <main>
-        <section id="about">
-            <h2>About the System</h2>
-            <p>This AI-powered home automation system uses sensor data to provide real-time monitoring and control of your home devices, optimizing your living environment for comfort, energy efficiency, and security.</p>
-        </section>
+  <h1>ESP32 Surveillance and Audio Control</h1>
+  
+  <!-- Video Stream Section -->
+  <div>
+    <h2>Live Camera Feed</h2>
+    <img id="videoStream" src="http://[ESP32_IP]/stream" alt="Live Camera Stream" />
+  </div>
+  
+  <!-- Audio Control Section -->
+  <div id="audioControls">
+    <h2>Audio Control</h2>
+    <button onclick="playAudio(1)">Play Track 1</button>
+    <button onclick="playAudio(2)">Play Track 2</button>
+    <button onclick="stopAudio()">Stop Audio</button>
+  </div>
 
-        <section id="sensor-data">
-            <h2>Sensor Data</h2>
-            <div id="sensorDataContainer">
-                <div class="sensor-card">
-                    <h3>Temperature</h3>
-                    <p id="tempData">Loading...</p>
-                    <canvas id="tempChart" class="pie-chart"></canvas>
-                </div>
-                <div class="sensor-card">
-                    <h3>Humidity</h3>
-                    <p id="humidityData">Loading...</p>
-                    <canvas id="humidityChart" class="pie-chart"></canvas>
-                </div>
-                <div class="sensor-card">
-                    <h3>Motion</h3>
-                    <p id="motionData">Loading...</p>
-                    <div id="motionIcon" class="animated-icon">🚶</div>
-                </div>
-            </div>
-        </section>
+  <!-- Information Display Section -->
+  <div id="infoText">
+    <p>Domain 1: IoT Projects</p>
+    <p>Current Status: Active</p>
+  </div>
 
-        <section id="sensor-control">
-            <h2>Control Home Devices</h2>
-            <div id="deviceStatusContainer">
-                <div class="device-status" id="lightStatus">
-                    <h3>Lights</h3>
-                    <p id="lightState">Off</p>
-                    <button id="turnOnLights">Turn On</button>
-                    <button id="turnOffLights" disabled>Turn Off</button>
-                </div>
-                <div class="device-status" id="fanStatus">
-                    <h3>Fan</h3>
-                    <p id="fanState">Off</p>
-                    <button id="turnOnFan">Turn On</button>
-                    <button id="turnOffFan" disabled>Turn Off</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="alerts">
-            <h2>Alerts</h2>
-            <div id="alertMessages"></div>
-        </section>
-    </main>
-
-    <script>
-        // Simulated sensor data (replace with actual sensor data through HTTP)
-        function getSensorData() {
-            // Simulate fetching data from the sensors via HTTP (you can use your own API here)
-            // This is just a placeholder, replace with actual data from your sensors
-            const simulatedData = {
-                temperature: (Math.random() * 5 + 22).toFixed(2), // Random temp between 22 and 27
-                humidity: (Math.random() * 30 + 40).toFixed(2),  // Random humidity between 40% and 70%
-                motion: Math.random() > 0.5,  // Simulate motion detection
-            };
-
-            // Update the DOM with the simulated data
-            document.getElementById('tempData').textContent = simulatedData.temperature + ' °C';
-            document.getElementById('humidityData').textContent = simulatedData.humidity + ' %';
-            document.getElementById('motionData').textContent = simulatedData.motion ? 'Motion Detected' : 'No Motion';
-
-            // Update Pie Charts
-            updatePieChart('tempChart', simulatedData.temperature);
-            updatePieChart('humidityChart', simulatedData.humidity);
-
-            // Update motion icon animation
-            const motionIcon = document.getElementById('motionIcon');
-            if (simulatedData.motion) {
-                motionIcon.classList.add('on');
-                motionIcon.classList.remove('off');
-            } else {
-                motionIcon.classList.add('off');
-                motionIcon.classList.remove('on');
-            }
-
-            // Check for critical temperature
-            if (simulatedData.temperature > 28) {
-                showAlert('High Temperature Alert: ' + simulatedData.temperature + '°C!', 'error');
-            }
+  <script>
+    // Function to play audio from DFPlayer Mini
+    function playAudio(track) {
+      fetch(`/playAudio?track=${track}`).then(response => {
+        if (response.ok) {
+          console.log(`Playing Track ${track}`);
         }
+      });
+    }
 
-        // Pie chart creation
-        function updatePieChart(canvasId, value) {
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            const data = {
-                labels: ['Value', 'Remaining'],
-                datasets: [{
-                    data: [value, 100 - value],
-                    backgroundColor: ['#3498db', '#ecf0f1'],
-                    borderWidth: 0
-                }]
-            };
-            const options = {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: false }
-                }
-            };
-            new Chart(ctx, {
-                type: 'pie',
-                data: data,
-                options: options
-            });
+    // Function to stop audio
+    function stopAudio() {
+      fetch(`/stopAudio`).then(response => {
+        if (response.ok) {
+          console.log("Audio Stopped");
         }
+      });
+    }
+  </script>
 
-        // Control device buttons (simulate turning on and off lights/fans)
-        document.getElementById('turnOnLights').addEventListener('click', function() {
-            // Simulate sending an HTTP request to turn on lights
-            document.getElementById('lightState').textContent = 'On';
-            document.getElementById('turnOnLights').disabled = true;
-            document.getElementById('turnOffLights').disabled = false;
-            showAlert('Lights are now On.', 'success');
-        });
-
-        document.getElementById('turnOffLights').addEventListener('click', function() {
-            // Simulate sending an HTTP request to turn off lights
-            document.getElementById('lightState').textContent = 'Off';
-            document.getElementById('turnOffLights').disabled = true;
-            document.getElementById('turnOnLights').disabled = false;
-            showAlert('Lights are now Off.', 'success');
-        });
-
-        document.getElementById('turnOnFan').addEventListener('click', function() {
-            // Simulate sending an HTTP request to turn on fan
-            document.getElementById('fanState').textContent = 'On';
-            document.getElementById('turnOnFan').disabled = true;
-            document.getElementById('turnOffFan').disabled = false;
-            showAlert('Fan is now On.', 'success');
-        });
-
-        document.getElementById('turnOffFan').addEventListener('click', function() {
-            // Simulate sending an HTTP request to turn off fan
-            document.getElementById('fanState').textContent = 'Off';
-            document.getElementById('turnOffFan').disabled = true;
-            document.getElementById('turnOnFan').disabled = false;
-            showAlert('Fan is now Off.', 'success');
-        });
-
-        // Function to display alerts
-        function showAlert(message, type) {
-            const alertBox = document.createElement('div');
-            alertBox.className = 'alert-card ' + type;
-            alertBox.textContent = message;
-            document.getElementById('alertMessages').prepend(alertBox);
-            setTimeout(() => {
-                alertBox.remove();
-            }, 5000);
-        }
-
-        // Initialize sensor data retrieval every 5 seconds
-        setInterval(getSensorData, 5000);  // Fetch new data every 5 seconds
-
-    </script>
 </body>
 </html>
