@@ -7,48 +7,65 @@
   <style>
     /* Basic styling */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #e9ecef;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
       text-align: center;
       margin: 0;
       padding: 20px;
+      overflow-x: hidden;
     }
 
     h1 {
-      color: #343a40;
-      font-size: 36px;
+      color: #28a745;
+      font-size: 3rem;
+      text-transform: uppercase;
     }
 
+    h2 {
+      color: #007bff;
+      font-size: 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Video Feed Box */
     #videoStream {
       width: 100%;
       max-width: 640px;
-      border: 1px solid #343a40;
+      border: 2px solid #343a40;
+      border-radius: 8px;
       margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    #audioControls {
-      margin-top: 20px;
+    .video-container {
+      background: #e9ecef;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
     }
 
+    /* Button Styling */
     button {
       padding: 12px 20px;
       margin: 10px;
-      font-size: 18px;
+      font-size: 1.1rem;
       background-color: #28a745;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: all 0.3s;
     }
 
     button:hover {
       background-color: #218838;
-    }
-
-    #infoText {
-      font-size: 20px;
-      margin-top: 20px;
-      color: #495057;
+      transform: translateY(-3px);
     }
 
     #snapshotButton {
@@ -57,19 +74,25 @@
 
     #snapshotButton:hover {
       background-color: #0056b3;
+      transform: translateY(-3px);
     }
 
-    /* Scrollable text */
+    /* Scrollable Text */
     .scroll-text {
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
       width: 100%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #495057;
+      margin-top: 20px;
     }
+
     .scroll-text p {
       display: inline-block;
       padding-left: 100%;
-      animation: scroll-text 20s linear infinite;
+      animation: scroll-text 25s linear infinite;
     }
 
     @keyframes scroll-text {
@@ -81,36 +104,64 @@
       }
     }
 
+    /* Section Titles */
+    .section-title {
+      color: #6c757d;
+      font-size: 1.6rem;
+      margin-top: 40px;
+      text-transform: uppercase;
+    }
+
+    /* Emojis */
+    .emoji {
+      font-size: 2.5rem;
+    }
+
+    /* Audio Control Section */
+    #audioControls {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    #audioControls button {
+      background-color: #ffc107;
+    }
+
+    #audioControls button:hover {
+      background-color: #e0a800;
+    }
   </style>
 </head>
 <body>
 
-  <h1>ESP32 Surveillance and Audio Control</h1>
-  
-  <!-- Video Stream Section -->
-  <div>
-    <h2>Live Camera Feed</h2>
-    <img id="videoStream" src="http://[ESP32_IP]/stream" alt="Live Camera Stream">
-  </div>
+  <div class="container">
+    <h1>ESP32 Surveillance & Audio Control <span class="emoji">📷🎶</span></h1>
 
-  <!-- Audio Control Section -->
-  <div id="audioControls">
-    <h2>Audio Control</h2>
-    <button onclick="playAudio(1)">Play Track 1</button>
-    <button onclick="playAudio(2)">Play Track 2</button>
-    <button onclick="stopAudio()">Stop Audio</button>
-  </div>
+    <!-- Video Feed Section -->
+    <div class="video-container">
+      <h2>Live Camera Feed <span class="emoji">🎥</span></h2>
+      <img id="videoStream" src="http://[ESP32_IP]/stream" alt="Live Camera Stream">
+    </div>
 
-  <!-- Snapshot Section -->
-  <div>
-    <h2>Camera Snapshot</h2>
-    <button id="snapshotButton" onclick="takeSnapshot()">Take Snapshot</button>
-  </div>
+    <!-- Audio Control Section -->
+    <div id="audioControls">
+      <h2 class="section-title">Audio Control <span class="emoji">🔊</span></h2>
+      <button onclick="playAudio(1)">Play Track 1 <span class="emoji">🎶</span></button>
+      <button onclick="playAudio(2)">Play Track 2 <span class="emoji">🎵</span></button>
+      <button onclick="stopAudio()">Stop Audio <span class="emoji">⏹️</span></button>
+    </div>
 
-  <!-- Information Display Section -->
-  <div id="infoText">
-    <div class="scroll-text">
-      <p id="info">Domain 1: IoT Projects. Current Status: Active</p>
+    <!-- Snapshot Section -->
+    <div>
+      <h2 class="section-title">Take Snapshot <span class="emoji">📸</span></h2>
+      <button id="snapshotButton" onclick="takeSnapshot()">Capture Snapshot <span class="emoji">📷</span></button>
+    </div>
+
+    <!-- Information Section -->
+    <div id="infoText">
+      <div class="scroll-text">
+        <p id="info">Domain 1: IoT Projects. Current Status: Active 💡</p>
+      </div>
     </div>
   </div>
 
@@ -141,7 +192,7 @@
     function takeSnapshot() {
       fetch('/snapshot').then(response => {
         if (response.ok) {
-          alert("Snapshot Taken!");
+          alert("Snapshot Taken! 📸");
         } else {
           alert("Failed to take snapshot.");
         }
