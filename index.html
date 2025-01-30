@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart IoT, AI, and VLSI Integration</title>
+    <title>Smart IoT, AI, and Home Automation</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* General Styling */
@@ -51,7 +51,7 @@
 
         .data-section {
             display: flex;
-            flex-wrap: wrap; /* Allow wrapping for mobile */
+            flex-wrap: wrap;
             justify-content: space-around;
             margin-top: 30px;
             gap: 20px;
@@ -108,7 +108,7 @@
 
             .data-card {
                 width: 100%;
-                margin-bottom: 20px; /* Adjust gap between cards */
+                margin-bottom: 20px;
             }
 
             .data-section {
@@ -143,14 +143,14 @@
 <body>
     <!-- Header Section -->
     <header id="header">
-        <h1>Smart IoT, AI, and VLSI Integration</h1>
-        <p>Bringing IoT, AI, and VLSI together for smarter predictions and analysis</p>
+        <h1>Smart IoT, AI, and Home Automation</h1>
+        <p>Bringing IoT, AI, and Home Automation together for smarter living</p>
     </header>
 
     <!-- Data Analysis Section -->
     <section id="data-analysis" class="section">
         <h2>Data Analysis & Insights</h2>
-        <p>We leverage advanced data analysis, AI models, and VLSI simulation results to extract insights from real-time IoT data.</p>
+        <p>We leverage IoT and AI to deliver real-time data insights and enhance smart home automation systems.</p>
         
         <div class="data-section">
             <!-- Temperature Data -->
@@ -166,74 +166,69 @@
                 <canvas id="flow-chart"></canvas>
             </div>
 
-            <!-- VLSI Simulation Data -->
+            <!-- Smart Home Automation Insights -->
             <div class="data-card">
-                <h3>VLSI Simulation Results</h3>
-                <p id="vlsi-status">Fetching VLSI Simulation Results...</p>
+                <h3>Smart Home Insights</h3>
+                <p id="home-status">Fetching real-time automation status...</p>
             </div>
         </div>
     </section>
 
     <!-- Footer Section -->
     <footer id="footer">
-        <p>&copy; 2025 Smart IoT, AI & VLSI Integration. All Rights Reserved.</p>
+        <p>&copy; 2025 Smart IoT, AI & Home Automation. All Rights Reserved.</p>
     </footer>
 
-    <script src="scripts.js"></script>
     <script>
-        // Placeholder VLSI simulation results (You can replace it with actual simulation data)
-        function fetchVLSIData() {
-            let vlsiResults = [
-                "Logic Gate 1: Passed",
-                "Logic Gate 2: Failed",
-                "Chip Status: Operational"
+        // Placeholder data for Smart Home Insights
+        function fetchHomeAutomationStatus() {
+            const statuses = [
+                "Lights: On, AC: Off, Door: Locked",
+                "Lights: Off, AC: On, Door: Unlocked",
+                "Lights: On, AC: On, Door: Locked"
             ];
-            
-            // Simulate fetching VLSI data
-            let result = vlsiResults[Math.floor(Math.random() * vlsiResults.length)];
-            document.getElementById('vlsi-status').textContent = result;
+            const status = statuses[Math.floor(Math.random() * statuses.length)];
+            document.getElementById('home-status').textContent = status;
         }
 
-        // Live Data Fetching (Simulating fetching data from connected devices)
+        // Live Data Fetching
         function fetchLiveData() {
             // Simulate live data for temperature and flow sensors
-            let temperature = [22, 24, 28, 25, 23, Math.floor(Math.random() * (30 - 20 + 1)) + 20]; // Add new temp value
-            let flow = [10, 12, 15, 11, 13, Math.floor(Math.random() * (20 - 10 + 1)) + 10]; // Add new flow value
+            const temperature = [22, 24, 28, 25, 23, Math.floor(Math.random() * 10) + 20];
+            const flow = [10, 12, 15, 11, 13, Math.floor(Math.random() * 10) + 10];
 
-            // Update the charts with live data
+            // Update charts with live data
             updateCharts(temperature, flow);
             makePrediction(temperature);
         }
 
         // Linear Regression for Temperature Prediction
         function linearRegression(data) {
-            let n = data.length;
+            const n = data.length;
             let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
 
-            // Calculate sums
             for (let i = 0; i < n; i++) {
-                sumX += i; // Time in hours (simplified as index)
-                sumY += data[i]; // Temperature data
+                sumX += i;
+                sumY += data[i];
                 sumXY += i * data[i];
                 sumX2 += i * i;
             }
 
-            // Calculate slope (m) and intercept (b)
-            let m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-            let b = (sumY - m * sumX) / n;
+            const m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const b = (sumY - m * sumX) / n;
 
             return { m, b };
         }
 
-        // Making Prediction for next value using linear regression
-        function makePrediction(temperatureData) {
-            const { m, b } = linearRegression(temperatureData);
-            const nextHour = temperatureData.length; // Predict for the next hour
+        // Make prediction for temperature
+        function makePrediction(data) {
+            const { m, b } = linearRegression(data);
+            const nextHour = data.length;
             const predictedTemp = m * nextHour + b;
             document.getElementById('temperature-prediction').textContent = `Predicted Temperature: ${predictedTemp.toFixed(2)}°C`;
         }
 
-        // Data Visualization: Using Chart.js for sensor data (temperature and flow)
+        // Data Visualization using Chart.js
         const temperatureData = {
             labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
             datasets: [{
@@ -256,7 +251,7 @@
             }]
         };
 
-        // Update the charts with live data
+        // Update charts with new data
         function updateCharts(temperature, flow) {
             temperatureChart.data.datasets[0].data = temperature;
             flowChart.data.datasets[0].data = flow;
@@ -264,55 +259,40 @@
             flowChart.update();
         }
 
-        // Create the charts
-        let temperatureChart = new Chart(document.getElementById('temperature-chart'), {
+        // Create charts
+        const temperatureChart = new Chart(document.getElementById('temperature-chart'), {
             type: 'line',
             data: temperatureData,
             options: {
                 responsive: true,
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Time'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Temperature (°C)'
-                        }
-                    }
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Temperature (°C)' } }
                 }
             }
         });
 
-        let flowChart = new Chart(document.getElementById('flow-chart'), {
+        const flowChart = new Chart(document.getElementById('flow-chart'), {
             type: 'line',
             data: flowData,
             options: {
                 responsive: true,
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Time'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Flow Rate (L/min)'
-                        }
-                    }
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Flow Rate (L/min)' } }
                 }
             }
         });
 
-        // Start fetching live data and update the results
-        setInterval(fetchLiveData, 5000); // Fetch new data every 5 seconds
-        setInterval(fetchVLSIData, 10000); // Simulate fetching VLSI data every 10 seconds
+        // Fetch live data every 10 seconds
+        setInterval(fetchLiveData, 10000);
 
+        // Fetch Smart Home Automation status every 5 seconds
+        setInterval(fetchHomeAutomationStatus, 5000);
+
+        // Initial Data Fetch
+        fetchLiveData();
+        fetchHomeAutomationStatus();
     </script>
 </body>
 </html>
