@@ -1,204 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ESP32 Camera and Audio Control</title>
-  <style>
-    /* Basic styling */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f8f9fa;
-      color: #343a40;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart IoT, AI, and VLSI Integration</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-    h1 {
-      color: #28a745;
-      font-size: 3rem;
-      text-transform: uppercase;
-    }
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-    h2 {
-      color: #007bff;
-      font-size: 2rem;
-    }
+        /* Header Section */
+        #header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+        #header h1 {
+            font-size: 3em;
+        }
 
-    /* Video Feed Box */
-    #videoStream {
-      width: 100%;
-      max-width: 640px;
-      border: 2px solid #343a40;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+        #header p {
+            font-size: 1.5em;
+        }
 
-    .video-container {
-      background: #e9ecef;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 40px;
-    }
+        /* Data Analysis Section */
+        #data-analysis {
+            background-color: #f0f8ff;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
 
-    /* Button Styling */
-    button {
-      padding: 12px 20px;
-      margin: 10px;
-      font-size: 1.1rem;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+        #data-analysis h2 {
+            font-size: 2.5em;
+            color: #8B0000; /* Chardola */
+            margin-bottom: 20px;
+        }
 
-    button:hover {
-      background-color: #218838;
-      transform: translateY(-3px);
-    }
+        .data-section {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 20px;
+        }
 
-    #snapshotButton {
-      background-color: #007bff;
-    }
+        .data-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    #snapshotButton:hover {
-      background-color: #0056b3;
-      transform: translateY(-3px);
-    }
+        .data-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
 
-    /* Scrollable Text */
-    .scroll-text {
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 100%;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #495057;
-      margin-top: 20px;
-    }
+        .data-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #FFD700; /* Gold */
+        }
 
-    .scroll-text p {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scroll-text 25s linear infinite;
-    }
+        .data-card canvas {
+            width: 100%;
+            height: 250px;
+        }
 
-    @keyframes scroll-text {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(-100%);
-      }
-    }
+        /* Footer Section */
+        #footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
 
-    /* Section Titles */
-    .section-title {
-      color: #6c757d;
-      font-size: 1.6rem;
-      margin-top: 40px;
-      text-transform: uppercase;
-    }
+        #footer p {
+            font-size: 1.2em;
+        }
 
-    /* Emojis */
-    .emoji {
-      font-size: 2.5rem;
-    }
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 768px) {
+            #header h1 {
+                font-size: 2em;
+            }
 
-    /* Audio Control Section */
-    #audioControls {
-      margin-top: 40px;
-      text-align: center;
-    }
+            #header p {
+                font-size: 1.2em;
+            }
 
-    #audioControls button {
-      background-color: #ffc107;
-    }
+            .data-card {
+                width: 100%;
+                margin-bottom: 20px; /* Adjust gap between cards */
+            }
 
-    #audioControls button:hover {
-      background-color: #e0a800;
-    }
-  </style>
+            .data-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #data-analysis h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #header h1 {
+                font-size: 1.5em;
+            }
+
+            #header p {
+                font-size: 1em;
+            }
+
+            #footer p {
+                font-size: 1em;
+            }
+
+            .data-card h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header Section -->
+    <header id="header">
+        <h1>Smart IoT, AI, and VLSI Integration</h1>
+        <p>Bringing IoT, AI, and VLSI together for smarter predictions and analysis</p>
+    </header>
 
-  <div class="container">
-    <h1>ESP32 Surveillance & Audio Control <span class="emoji">📷🎶</span></h1>
+    <!-- Data Analysis Section -->
+    <section id="data-analysis" class="section">
+        <h2>Data Analysis & Insights</h2>
+        <p>We leverage advanced data analysis, AI models, and VLSI simulation results to extract insights from real-time IoT data.</p>
+        
+        <div class="data-section">
+            <!-- Temperature Data -->
+            <div class="data-card">
+                <h3>Temperature Analysis</h3>
+                <canvas id="temperature-chart"></canvas>
+                <p id="temperature-prediction">Predicted Temperature: --°C</p>
+            </div>
 
-    <!-- Video Feed Section -->
-    <div class="video-container">
-      <h2>Live Camera Feed <span class="emoji">🎥</span></h2>
-      <img id="videoStream" src="http://[ESP32_IP]/stream" alt="Live Camera Stream">
-    </div>
+            <!-- Flow Data -->
+            <div class="data-card">
+                <h3>Flow Analysis</h3>
+                <canvas id="flow-chart"></canvas>
+            </div>
 
-    <!-- Audio Control Section -->
-    <div id="audioControls">
-      <h2 class="section-title">Audio Control <span class="emoji">🔊</span></h2>
-      <button onclick="playAudio(1)">Play Track 1 <span class="emoji">🎶</span></button>
-      <button onclick="playAudio(2)">Play Track 2 <span class="emoji">🎵</span></button>
-      <button onclick="stopAudio()">Stop Audio <span class="emoji">⏹️</span></button>
-    </div>
+            <!-- VLSI Simulation Data -->
+            <div class="data-card">
+                <h3>VLSI Simulation Results</h3>
+                <p id="vlsi-status">Fetching VLSI Simulation Results...</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Snapshot Section -->
-    <div>
-      <h2 class="section-title">Take Snapshot <span class="emoji">📸</span></h2>
-      <button id="snapshotButton" onclick="takeSnapshot()">Capture Snapshot <span class="emoji">📷</span></button>
-    </div>
+    <!-- Footer Section -->
+    <footer id="footer">
+        <p>&copy; 2025 Smart IoT, AI & VLSI Integration. All Rights Reserved.</p>
+    </footer>
 
-    <!-- Information Section -->
-    <div id="infoText">
-      <div class="scroll-text">
-        <p id="info">Domain 1: IoT Projects. Current Status: Active 💡</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Play specific audio track
-    function playAudio(track) {
-      fetch(`/playAudio?track=${track}`).then(response => {
-        if (response.ok) {
-          console.log(`Playing Track ${track}`);
-        } else {
-          alert("Failed to play audio.");
+    <script src="scripts.js"></script>
+    <script>
+        // Placeholder VLSI simulation results (You can replace it with actual simulation data)
+        function fetchVLSIData() {
+            let vlsiResults = [
+                "Logic Gate 1: Passed",
+                "Logic Gate 2: Failed",
+                "Chip Status: Operational"
+            ];
+            
+            // Simulate fetching VLSI data
+            let result = vlsiResults[Math.floor(Math.random() * vlsiResults.length)];
+            document.getElementById('vlsi-status').textContent = result;
         }
-      });
-    }
 
-    // Stop the audio
-    function stopAudio() {
-      fetch(`/stopAudio`).then(response => {
-        if (response.ok) {
-          console.log("Audio Stopped");
-        } else {
-          alert("Failed to stop audio.");
+        // Live Data Fetching (Simulating fetching data from connected devices)
+        function fetchLiveData() {
+            // Simulate live data for temperature and flow sensors
+            let temperature = [22, 24, 28, 25, 23, Math.floor(Math.random() * (30 - 20 + 1)) + 20]; // Add new temp value
+            let flow = [10, 12, 15, 11, 13, Math.floor(Math.random() * (20 - 10 + 1)) + 10]; // Add new flow value
+
+            // Update the charts with live data
+            updateCharts(temperature, flow);
+            makePrediction(temperature);
         }
-      });
-    }
 
-    // Take a snapshot with the camera
-    function takeSnapshot() {
-      fetch('/snapshot').then(response => {
-        if (response.ok) {
-          alert("Snapshot Taken! 📸");
-        } else {
-          alert("Failed to take snapshot.");
+        // Linear Regression for Temperature Prediction
+        function linearRegression(data) {
+            let n = data.length;
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+
+            // Calculate sums
+            for (let i = 0; i < n; i++) {
+                sumX += i; // Time in hours (simplified as index)
+                sumY += data[i]; // Temperature data
+                sumXY += i * data[i];
+                sumX2 += i * i;
+            }
+
+            // Calculate slope (m) and intercept (b)
+            let m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            let b = (sumY - m * sumX) / n;
+
+            return { m, b };
         }
-      });
-    }
-  </script>
 
+        // Making Prediction for next value using linear regression
+        function makePrediction(temperatureData) {
+            const { m, b } = linearRegression(temperatureData);
+            const nextHour = temperatureData.length; // Predict for the next hour
+            const predictedTemp = m * nextHour + b;
+            document.getElementById('temperature-prediction').textContent = `Predicted Temperature: ${predictedTemp.toFixed(2)}°C`;
+        }
+
+        // Data Visualization: Using Chart.js for sensor data (temperature and flow)
+        const temperatureData = {
+            labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: [22, 24, 28, 25, 23],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        };
+
+        const flowData = {
+            labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
+            datasets: [{
+                label: 'Flow Rate (L/min)',
+                data: [10, 12, 15, 11, 13],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        };
+
+        // Update the charts with live data
+        function updateCharts(temperature, flow) {
+            temperatureChart.data.datasets[0].data = temperature;
+            flowChart.data.datasets[0].data = flow;
+            temperatureChart.update();
+            flowChart.update();
+        }
+
+        // Create the charts
+        let temperatureChart = new Chart(document.getElementById('temperature-chart'), {
+            type: 'line',
+            data: temperatureData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        }
+                    }
+                }
+            }
+        });
+
+        let flowChart = new Chart(document.getElementById('flow-chart'), {
+            type: 'line',
+            data: flowData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Flow Rate (L/min)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Start fetching live data and update the results
+        setInterval(fetchLiveData, 5000); // Fetch new data every 5 seconds
+        setInterval(fetchVLSIData, 10000); // Simulate fetching VLSI data every 10 seconds
+
+    </script>
 </body>
 </html>
