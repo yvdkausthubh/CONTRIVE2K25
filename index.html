@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Modeled Robot with Display and Speech</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* General Styling */
         * {
@@ -69,37 +68,28 @@
             margin-bottom: 30px;
         }
 
-        /* Data Insights Section */
-        #data-analysis {
-            background: #f4f4f4;
-            padding: 60px 20px;
+        /* Team Section */
+        #team-section {
+            background-color: #4CAF50;
+            color: white;
+            padding: 40px;
             text-align: center;
+            margin-top: 50px;
+            border-radius: 10px;
         }
 
-        #data-analysis h2 {
+        #team-section h2 {
             font-size: 2.5em;
-            color: #8B0000;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        .data-section {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
+        #team-section p {
+            font-size: 1.2em;
         }
 
-        .data-card {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 28%;
-            text-align: center;
-        }
-
-        .data-card h3 {
-            font-size: 1.8em;
+        #guidance {
+            margin-top: 20px;
+            font-size: 1.3em;
             color: #FFD700;
         }
 
@@ -137,23 +127,15 @@
         </div>
     </section>
 
-    <!-- Data Analysis Section -->
-    <section id="data-analysis">
-        <h2>Real-Time Data Analysis</h2>
-        <p>Monitor and analyze sensor data for enhanced performance.</p>
-        
-        <div class="data-section">
-            <!-- Temperature Data -->
-            <div class="data-card">
-                <h3>Temperature Monitoring</h3>
-                <canvas id="temperature-chart"></canvas>
-            </div>
-
-            <!-- Flow Data -->
-            <div class="data-card">
-                <h3>Flow Rate Monitoring</h3>
-                <canvas id="flow-chart"></canvas>
-            </div>
+    <!-- Team Section -->
+    <section id="team-section">
+        <h2>Meet the Team</h2>
+        <p>Bandi Bhargavi</p>
+        <p>Kalakanti Harshit</p>
+        <p>YVDevi Kausthubh</p>
+        <p>Darshanam Devaki</p>
+        <div id="guidance">
+            <p>Under the guidance of G. Ravi Kishore</p>
         </div>
     </section>
 
@@ -163,33 +145,6 @@
     </footer>
 
     <script>
-        // Chart.js for temperature and flow data
-        const temperatureChart = new Chart(document.getElementById('temperature-chart'), {
-            type: 'line',
-            data: {
-                labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
-                datasets: [{
-                    label: 'Temperature (°C)',
-                    data: [22, 24, 28, 25, 23],
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    tension: 0.4,
-                }]
-            }
-        });
-
-        const flowChart = new Chart(document.getElementById('flow-chart'), {
-            type: 'line',
-            data: {
-                labels: ['12 AM', '6 AM', '12 PM', '6 PM', '12 AM'],
-                datasets: [{
-                    label: 'Flow Rate (L/min)',
-                    data: [10, 12, 15, 11, 13],
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    tension: 0.4,
-                }]
-            }
-        });
-
         // Speech Synthesis for robot narration
         const robotContent = document.getElementById("robot-info").textContent;
         const utterance = new SpeechSynthesisUtterance(robotContent);
