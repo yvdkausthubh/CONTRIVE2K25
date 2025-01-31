@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Smart IoT, AI, and Home Automation</title>
+    <title>AI-Modeled Robot with Display and Speech</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* General Styling */
@@ -21,22 +22,11 @@
 
         /* Header Section */
         #header {
-            position: relative;
             background: linear-gradient(135deg, #4CAF50, #FFD700);
             color: white;
             text-align: center;
             padding: 100px 20px;
             overflow: hidden;
-            animation: gradient-shift 10s infinite;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% {
-                background: linear-gradient(135deg, #4CAF50, #FFD700);
-            }
-            50% {
-                background: linear-gradient(135deg, #FFD700, #4CAF50);
-            }
         }
 
         #header h1 {
@@ -49,151 +39,68 @@
             margin-top: 20px;
         }
 
-        /* Floating Animations in Header */
-        .floating-images img {
-            position: absolute;
-            width: 120px;
-            opacity: 0.8;
-            animation: float 5s ease-in-out infinite;
+        /* Robot Display Section */
+        #robot-display {
+            background: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            border-radius: 15px;
         }
 
-        .floating-images img:nth-child(1) {
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
+        #robot-display h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4CAF50;
         }
 
-        .floating-images img:nth-child(2) {
-            top: 20%;
-            right: 10%;
-            animation-delay: 1s;
+        #robot-content {
+            background-color: #000;
+            color: #fff;
+            padding: 50px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            width: 80%;
+            margin: auto;
         }
 
-        .floating-images img:nth-child(3) {
-            bottom: 15%;
-            left: 20%;
-            animation-delay: 2s;
+        .content-section {
+            margin-bottom: 30px;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        /* Data Analysis Section */
+        /* Data Insights Section */
         #data-analysis {
-            background: linear-gradient(120deg, #f0f8ff, #fefbd8);
+            background: #f4f4f4;
             padding: 60px 20px;
             text-align: center;
         }
 
         #data-analysis h2 {
-            font-size: 3em;
-            color: #8B0000; /* Chardola */
-            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #8B0000;
+            margin-bottom: 30px;
         }
 
         .data-section {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 30px;
             gap: 30px;
         }
 
         .data-card {
             background-color: #fff;
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             width: 28%;
             text-align: center;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-            position: relative;
-        }
-
-        .data-card:hover {
-            transform: rotateY(15deg) translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         .data-card h3 {
             font-size: 1.8em;
-            margin-bottom: 10px;
-            color: #FFD700; /* Gold */
-        }
-
-        .data-card canvas {
-            width: 100%;
-            height: 250px;
-        }
-
-        /* Animated Icons */
-        .data-card img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 10px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Smart Home Insights Rotating Card */
-        .data-card-insights {
-            perspective: 1000px;
-        }
-
-        .card-inner {
-            width: 100%;
-            height: 300px;
-            transform-style: preserve-3d;
-            animation: rotate-card 5s infinite linear;
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-        }
-
-        .card-front {
-            background-color: #FFD700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .card-back {
-            background-color: #4CAF50;
-            transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            color: white;
-        }
-
-        @keyframes rotate-card {
-            0%, 100% {
-                transform: rotateY(0);
-            }
-            50% {
-                transform: rotateY(180deg);
-            }
+            color: #FFD700;
         }
 
         /* Footer Section */
@@ -207,57 +114,52 @@
         #footer p {
             font-size: 1.2em;
         }
+
     </style>
 </head>
+
 <body>
     <!-- Header Section -->
     <header id="header">
-        <h1>Advanced IoT, AI, and Home Automation</h1>
-        <p>Bringing innovation and intelligence to smart living.</p>
-        <div class="floating-images">
-            <img src="https://via.placeholder.com/120" alt="IoT Icon 1">
-            <img src="https://via.placeholder.com/120" alt="AI Icon 2">
-            <img src="https://via.placeholder.com/120" alt="Home Icon 3">
-        </div>
+        <h1>AI-Modeled Robot</h1>
+        <p>Integrating IoT, AI, and Smart Automation for a futuristic experience.</p>
     </header>
+
+    <!-- Robot Display Section -->
+    <section id="robot-display">
+        <h2>Live Display and Speech Narration</h2>
+        <div id="robot-content">
+            <div class="content-section" id="robot-info">
+                <p>Current Domain: IoT Systems</p>
+                <p>Current Program: IoT Automation</p>
+                <p>Next: AI Integration with Home Automation</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Data Analysis Section -->
     <section id="data-analysis">
-        <h2>Data Analysis & Insights</h2>
-        <p>Explore real-time data analysis and advanced insights for a smarter future.</p>
+        <h2>Real-Time Data Analysis</h2>
+        <p>Monitor and analyze sensor data for enhanced performance.</p>
         
         <div class="data-section">
             <!-- Temperature Data -->
             <div class="data-card">
-                <img src="https://via.placeholder.com/60" alt="Temperature Icon">
-                <h3>Temperature Analysis</h3>
+                <h3>Temperature Monitoring</h3>
                 <canvas id="temperature-chart"></canvas>
             </div>
 
             <!-- Flow Data -->
             <div class="data-card">
-                <img src="https://via.placeholder.com/60" alt="Flow Icon">
-                <h3>Flow Analysis</h3>
+                <h3>Flow Rate Monitoring</h3>
                 <canvas id="flow-chart"></canvas>
-            </div>
-
-            <!-- Smart Home Insights -->
-            <div class="data-card data-card-insights">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <p>Fetching Real-Time Data...</p>
-                    </div>
-                    <div class="card-back">
-                        <p>Lights: ON, AC: OFF</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer Section -->
     <footer id="footer">
-        <p>&copy; 2025 Advanced IoT, AI & Home Automation. All Rights Reserved.</p>
+        <p>&copy; 2025 AI-Modeled Robot Project. All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -287,6 +189,12 @@
                 }]
             }
         });
+
+        // Speech Synthesis for robot narration
+        const robotContent = document.getElementById("robot-info").textContent;
+        const utterance = new SpeechSynthesisUtterance(robotContent);
+        window.speechSynthesis.speak(utterance);
     </script>
 </body>
+
 </html>
