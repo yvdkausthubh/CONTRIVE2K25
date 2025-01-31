@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Modeled Robot with Display and Speech</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js"></script>
     <style>
         /* General Styling */
         * {
@@ -17,20 +19,23 @@
         body {
             background-color: #f4f4f4;
             color: #333;
+            overflow-x: hidden;
         }
 
         /* Header Section */
         #header {
-            background: linear-gradient(135deg, #4CAF50, #FFD700);
+            background: url('header-bg.jpg') no-repeat center center/cover;
             color: white;
             text-align: center;
             padding: 100px 20px;
             overflow: hidden;
+            position: relative;
         }
 
         #header h1 {
-            font-size: 3.5em;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 4em;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-in-out;
         }
 
         #header p {
@@ -46,6 +51,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             margin: 20px;
             border-radius: 15px;
+            animation: slideIn 1s ease-out;
         }
 
         #robot-display h2 {
@@ -62,6 +68,7 @@
             font-size: 1.2em;
             width: 80%;
             margin: auto;
+            animation: fadeInUp 1.5s ease-in-out;
         }
 
         .content-section {
@@ -76,6 +83,7 @@
             text-align: center;
             margin-top: 50px;
             border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
         }
 
         #team-section h2 {
@@ -85,12 +93,7 @@
 
         #team-section p {
             font-size: 1.2em;
-        }
-
-        #guidance {
-            margin-top: 20px;
-            font-size: 1.3em;
-            color: #FFD700;
+            margin-bottom: 5px;
         }
 
         /* Footer Section */
@@ -103,6 +106,82 @@
 
         #footer p {
             font-size: 1.2em;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 60%;
+            max-width: 500px;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+        }
+
+        .close {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close:hover {
+            background-color: #45a049;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
     </style>
@@ -144,11 +223,37 @@
         <p>&copy; 2025 AI-Modeled Robot Project. All Rights Reserved.</p>
     </footer>
 
+    <!-- Modal Popup -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <h3>Meet Our Lead Engineer</h3>
+            <p>YVDevi Kausthubh is the lead engineer behind the AI integration, IoT systems, and the innovative features of the robot.</p>
+            <button class="close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
     <script>
         // Speech Synthesis for robot narration
         const robotContent = document.getElementById("robot-info").textContent;
         const utterance = new SpeechSynthesisUtterance(robotContent);
         window.speechSynthesis.speak(utterance);
+
+        // Modal function
+        function openModal() {
+            document.getElementById("teamModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("teamModal").style.display = "none";
+        }
+
+        // Animations on page load
+        window.onload = function () {
+            gsap.from("#header h1", { duration: 1.5, opacity: 0, y: -50 });
+            gsap.from("#header p", { duration: 1.5, opacity: 0, y: 50 });
+            gsap.from("#robot-display", { duration: 1, opacity: 0, x: -100 });
+            gsap.from("#robot-content", { duration: 1, opacity: 0, y: 50 });
+        }
     </script>
 </body>
 
