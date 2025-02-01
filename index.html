@@ -231,10 +231,22 @@
   <script>
     function startSpeech() {
       const speech = new SpeechSynthesisUtterance();
-      speech.text = "Hello, welcome to SmartBot! Let's explore the AI and IoT features of this robot!";
-      speech.lang = "en-US";
-      window.speechSynthesis.speak(speech);
-    }
+      function startSpeech() {
+  const speech = new SpeechSynthesisUtterance();
+  speech.text = "Hello, welcome to SmartBot! Let's explore the AI and IoT features of this robot. " +
+                "SmartBot is an advanced AI-powered robot that integrates seamlessly with the Internet of Things, " +
+                "allowing it to interact with smart devices, control environments, and perform autonomous tasks. " +
+                "It is equipped with a machine learning model that enables it to learn from its surroundings and make intelligent decisions. " +
+                "Using voice recognition, you can issue commands and interact with SmartBot like never before. " +
+                "Additionally, it is equipped with a camera, allowing real-time surveillance and monitoring through its ESP32-CAM module. " +
+                "SmartBot supports both Wi-Fi and Bluetooth for remote control, making it adaptable to various environments. " +
+                "Whether it's monitoring your home, automating industrial processes, or helping in education, SmartBot is the ideal solution. " +
+                "Its applications range from home automation, industrial surveillance, to STEM education, where it serves as a hands-on tool for learning AI and robotics. " +
+                "Stay tuned as we demonstrate the incredible features and abilities of SmartBot in action!";
+  speech.lang = "en-US";
+  window.speechSynthesis.speak(speech);
+}
+
   </script>
 </body>
 </html>
