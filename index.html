@@ -1,251 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Modeled Robot with Display and Speech</title>
-    <style>
-        /* General Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IoT-integrated robot with real-time display, speech synthesis, and surveillance features.">
+  <title>SmartBot: The Future of Robotics, IoT, and Voice Interaction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-            font-size: 16px;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
 
-        /* Header Section */
-        #header {
-            background: linear-gradient(135deg, #4CAF50, #FFD700);
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-            overflow: hidden;
-        }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      padding: 20px;
+    }
 
-        #header h1 {
-            font-size: 3.5em;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
+    nav .logo {
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+    }
 
-        #header p {
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
+    nav ul {
+      list-style: none;
+    }
 
-        /* Robot Display Section */
-        #robot-display {
-            background: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            border-radius: 15px;
-        }
+    nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
 
-        #robot-display h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #4CAF50;
-        }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+    }
 
-        #robot-content {
-            background-color: #000;
-            color: #fff;
-            padding: 50px;
-            border-radius: 10px;
-            font-size: 1.2em;
-            width: 90%;
-            margin: auto;
-            overflow-wrap: break-word;
-        }
+    .hero {
+      text-align: center;
+      background-color: #222;
+      color: white;
+      padding: 60px 20px;
+    }
 
-        .content-section {
-            margin-bottom: 30px;
-        }
+    .hero h1 {
+      font-size: 36px;
+    }
 
-        /* Camera Stream Section */
-        #camera-stream {
-            margin-top: 40px;
-            background: #fff;
-            border: 2px solid #4CAF50;
-            padding: 10px;
-            border-radius: 15px;
-            text-align: center;
-        }
+    button {
+      background-color: #ff9800;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+    }
 
-        #camera-stream h3 {
-            color: #4CAF50;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
+    button:hover {
+      background-color: #e68900;
+    }
 
-        #camera-feed {
-            width: 100%;
-            height: 400px;
-            border-radius: 10px;
-            background-color: #000;
-        }
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-        /* Team Section */
-        #team-section {
-            background-color: #4CAF50;
-            color: white;
-            padding: 40px;
-            text-align: center;
-            margin-top: 50px;
-            border-radius: 10px;
-        }
+    .section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
 
-        #team-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
+    .feature {
+      margin-bottom: 20px;
+    }
 
-        #team-section p {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        #guidance {
-            margin-top: 20px;
-            font-size: 1.3em;
-            color: #FFD700;
-        }
+    form input, form textarea {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
 
-        /* Footer Section */
-        #footer {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-        #footer p {
-            font-size: 1.2em;
-        }
+    form button:hover {
+      background-color: #45a049;
+    }
 
-        /* Responsive Design */
-        @media only screen and (max-width: 768px) {
-            #header h1 {
-                font-size: 2.5em;
-            }
-
-            #header p {
-                font-size: 1.2em;
-            }
-
-            #robot-display h2 {
-                font-size: 2em;
-            }
-
-            #robot-content {
-                font-size: 1em;
-            }
-
-            #team-section h2 {
-                font-size: 2em;
-            }
-
-            #team-section p {
-                font-size: 1em;
-            }
-
-            #camera-feed {
-                height: 300px;
-            }
-        }
-
-        @media only screen and (max-width: 480px) {
-            #header h1 {
-                font-size: 2em;
-            }
-
-            #header p {
-                font-size: 1em;
-            }
-
-            #robot-content {
-                font-size: 0.9em;
-                padding: 20px;
-            }
-
-            #footer p {
-                font-size: 1em;
-            }
-
-            #team-section h2 {
-                font-size: 1.8em;
-            }
-
-            #team-section p {
-                font-size: 0.9em;
-            }
-
-            #camera-feed {
-                height: 250px;
-            }
-        }
-    </style>
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: white;
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Header Section -->
-    <header id="header">
-        <h1>AI-Modeled Robot</h1>
-        <p>Integrating IoT, AI, and Smart Automation for a futuristic experience.</p>
-    </header>
 
-    <!-- Robot Display Section -->
-    <section id="robot-display">
-        <h2>Live Display and Speech Narration</h2>
-        <div id="robot-content">
-            <div class="content-section" id="robot-info">
-                <p>Current Domain: IoT Systems</p>
-                <p>Current Program: IoT Automation</p>
-                <p>Next: AI Integration with Home Automation</p>
-            </div>
-        </div>
-    </section>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">SmartBot</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#applications">Applications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-    <!-- Camera Stream Section -->
-    <section id="camera-stream">
-        <h3>ESP32-CAM Live Feed</h3>
-        <div id="camera-feed">
-            <!-- Assuming the ESP32-CAM is streaming at the following URL -->
-<img src="http://192.168.156.248:8080/stream" alt="ESP32 Camera Feed" style="width: 100%; height: auto;"/>
-        </div>
-    </section>
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <h1>SmartBot: IoT-Integrated Robot</h1>
+    <p>Interact with the future of robotics through voice and display!</p>
+    <button onclick="startSpeech()">Try Speech</button>
+  </section>
 
-    <!-- Team Section -->
-    <section id="team-section">
-        <h2>Meet the Team</h2>
-        <p>Bandi Bhargavi</p>
-        <p>Kalakanti Harshit</p>
-        <p>YVDevi Kausthubh</p>
-        <p>Darshanam Devaki</p>
-        <div id="guidance">
-            <p>Under the guidance of G. Ravi Kishore</p>
-        </div>
-    </section>
+  <!-- About Section -->
+  <section id="about" class="section">
+    <h2>About the Project</h2>
+    <p>The IoT-integrated robot combines IoT technologies and robotics to enhance user interaction through a dynamic display and voice synthesis. Learn more about how this robot revolutionizes smart homes, education, and industrial applications.</p>
+  </section>
 
-    <!-- Footer Section -->
-    <footer id="footer">
-        <p>&copy; 2025 AI-Modeled Robot Project. All Rights Reserved.</p>
-    </footer>
+  <!-- Features Section -->
+  <section id="features" class="section">
+    <h2>Features</h2>
+    <div class="feature">
+      <h3>Real-Time Display</h3>
+      <p>Auto-scrolling display for real-time information updates on various domains like IoT, VLSI, and robotics.</p>
+    </div>
+    <div class="feature">
+      <h3>Speech Synthesis</h3>
+      <p>The robot reads aloud the information, making it more interactive and accessible for users.</p>
+    </div>
+    <div class="feature">
+      <h3>Surveillance with ESP32-CAM</h3>
+      <p>Real-time video streaming for surveillance and monitoring, with remote access options.</p>
+    </div>
+    <div class="feature">
+      <h3>Wireless Connectivity</h3>
+      <p>Wi-Fi and Bluetooth integration for remote control and connectivity in IoT ecosystems.</p>
+    </div>
+  </section>
 
-    <script>
-        // Speech Synthesis for robot narration
-        const robotContent = document.getElementById("robot-info").textContent;
-        const utterance = new SpeechSynthesisUtterance(robotContent);
-        window.speechSynthesis.speak(utterance);
-    </script>
+  <!-- Applications Section -->
+  <section id="applications" class="section">
+    <h2>Applications</h2>
+    <p>Our robot is perfect for smart homes, surveillance, educational platforms, and industrial automation. It offers real-time interaction, monitoring, and automation capabilities in various scenarios.</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form id="contact-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 SmartBot. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function startSpeech() {
+      const speech = new SpeechSynthesisUtterance();
+      speech.text = "Welcome to SmartBot! Interact with the future of robotics through voice and display!";
+      speech.lang = "en-US";
+      window.speechSynthesis.speak(speech);
+    }
+
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Thank you for reaching out! We will get back to you shortly.");
+    });
+  </script>
 </body>
-
 </html>
