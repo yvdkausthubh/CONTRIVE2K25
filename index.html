@@ -237,6 +237,7 @@
         font-size: 14px;
       }
     }
+
   </style>
 </head>
 <body>
@@ -291,8 +292,8 @@
     </div>
     <div class="feature">
       <i class="fas fa-remote"></i>
-      <h3>Remote Control</h3>
-      <p>Control SmartBot remotely via Wi-Fi or Bluetooth for tasks like surveillance, navigation, and data collection.</p>
+      <h3>Remote Control with ESP32</h3>
+      <p>SmartBot can be controlled via a remote interface using ESP32 and communication protocols, enabling easy navigation and task execution.</p>
     </div>
   </section>
 
@@ -309,37 +310,26 @@
     </div>
     <div class="application">
       <h3>Surveillance</h3>
-      <p>Monitor environments with SmartBot's real-time video streaming and AI-based anomaly detection for security purposes.</p>
-    </div>
-    <div class="application">
-      <h3>Educational Purposes</h3>
-      <p>Utilize SmartBot for STEM education, demonstrating AI, IoT, and robotics in real-world applications through interactive lessons.</p>
+      <p>Monitor environments with the ESP32-CAM integration, providing real-time video feeds and alerts.</p>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 SmartBot. All Rights Reserved.</p>
+    <p>&copy; 2025 SmartBot. All rights reserved.</p>
   </footer>
 
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+  <!-- JavaScript -->
   <script>
     function startSpeech() {
-      const speech = new SpeechSynthesisUtterance();
-      speech.text = "Hello, welcome to SmartBot! Let's explore the AI and IoT features of this robot. " +
-                    "SmartBot is an advanced AI-powered robot that integrates seamlessly with the Internet of Things, " +
-                    "allowing it to interact with smart devices, control environments, and perform autonomous tasks. " +
-                    "It is equipped with a machine learning model that enables it to learn from its surroundings and make intelligent decisions. " +
-                    "Using voice recognition, you can issue commands and interact with SmartBot like never before. " +
-                    "Additionally, it is equipped with a camera, allowing real-time surveillance and monitoring through its ESP32-CAM module. " +
-                    "SmartBot supports both Wi-Fi and Bluetooth for remote control, making it adaptable to various environments. " +
-                    "Whether it's monitoring your home, automating industrial processes, or helping in education, SmartBot is the ideal solution. " +
-                    "Its applications range from home automation, industrial surveillance, to STEM education, where it serves as a hands-on tool for learning AI and robotics. " +
-                    "Stay tuned as we demonstrate the incredible features and abilities of SmartBot in action!";
-      speech.lang = "en-US";
-      window.speechSynthesis.speak(speech);
+      const msg = new SpeechSynthesisUtterance('Welcome to SmartBot! Let me know how I can assist you today!');
+      window.speechSynthesis.speak(msg);
+    }
+
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('active');
     }
   </script>
+
 </body>
 </html>
