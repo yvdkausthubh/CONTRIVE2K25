@@ -275,6 +275,7 @@
       <h3>Surveillance with ESP32-CAM</h3>
       <p>Live video streaming for security and monitoring, accessible remotely via Wi-Fi or Bluetooth.</p>
       <!-- ESP32-CAM Feed -->
+      <!-- Replace <ESP32_CAM_IP> with the actual IP of your ESP32-CAM -->
       <iframe src="http://<ESP32_CAM_IP>/stream" width="100%" height="400" frameborder="0"></iframe>
     </div>
   </section>
@@ -300,47 +301,43 @@
     </div>
     <div class="application">
       <h3>Industrial Automation</h3>
-      <p>SmartBot assists in automating repetitive tasks, monitoring industrial environments, and improving safety.</p>
+      <p>Monitor and manage automated processes with integrated sensors and control systems.</p>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer Section -->
   <footer>
-    <p>&copy; 2025 SmartBot. All Rights Reserved.</p>
+    <p>&copy; 2025 SmartBot. All rights reserved.</p>
   </footer>
 
+  <!-- JavaScript -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <script>
-    // Toggle menu for mobile view
     function toggleMenu() {
-      document.getElementById("menu").classList.toggle("active");
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('active');
     }
 
-    // Start speech synthesis when clicked
     function startSpeech() {
-      const utterance = new SpeechSynthesisUtterance("Hello, I am SmartBot! How can I assist you today?");
-      window.speechSynthesis.speak(utterance);
+      alert('Speech interaction initiated.');
     }
 
-    // Remote control functions
     function moveForward() {
-      // Add command to ESP32 or robot to move forward
-      console.log("Moving forward");
+      alert('Moving forward...');
     }
 
     function moveBackward() {
-      // Add command to ESP32 or robot to move backward
-      console.log("Moving backward");
+      alert('Moving backward...');
     }
 
     function turnLeft() {
-      // Add command to ESP32 or robot to turn left
-      console.log("Turning left");
+      alert('Turning left...');
     }
 
     function turnRight() {
-      // Add command to ESP32 or robot to turn right
-      console.log("Turning right");
+      alert('Turning right...');
     }
   </script>
+
 </body>
 </html>
