@@ -148,6 +148,28 @@
       text-align: center;
     }
 
+    /* Remote control buttons */
+    .remote-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .remote-controls button {
+      background-color: #007BFF;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .remote-controls button:hover {
+      background-color: #0056b3;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .feature, .application {
@@ -289,12 +311,22 @@
       <i class="fas fa-video"></i>
       <h3>Surveillance with ESP32-CAM</h3>
       <p>Real-time video streaming for security and monitoring, accessible remotely via Wi-Fi or Bluetooth.</p>
+      <!-- ESP32-CAM Feed -->
+      <iframe src="http://<ESP32_CAM_IP>/stream" width="100%" height="400" frameborder="0"></iframe>
     </div>
     <div class="feature">
       <i class="fas fa-remote"></i>
       <h3>Remote Control with ESP32</h3>
       <p>SmartBot can be controlled via a remote interface using ESP32 and communication protocols, enabling easy navigation and task execution.</p>
     </div>
+  </section>
+
+  <!-- Remote Control Section -->
+  <section class="remote-controls">
+    <button onclick="moveForward()">Move Forward</button>
+    <button onclick="moveBackward()">Move Backward</button>
+    <button onclick="turnLeft()">Turn Left</button>
+    <button onclick="turnRight()">Turn Right</button>
   </section>
 
   <!-- Applications Section -->
@@ -310,24 +342,46 @@
     </div>
     <div class="application">
       <h3>Surveillance</h3>
-      <p>Monitor environments with the ESP32-CAM integration, providing real-time video feeds and alerts.</p>
+      <p>Use SmartBot for security applications to monitor and stream video footage in real-time, integrated with remote access for monitoring.</p>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 SmartBot. All rights reserved.</p>
+    <p>&copy; 2025 SmartBot. All Rights Reserved.</p>
   </footer>
 
-  <!-- JavaScript -->
   <script>
-    function startSpeech() {
-      const msg = new SpeechSynthesisUtterance('Welcome to SmartBot! Let me know how I can assist you today!');
-      window.speechSynthesis.speak(msg);
+    // Toggle menu for mobile view
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
     }
 
-    function toggleMenu() {
-      document.getElementById('menu').classList.toggle('active');
+    // Start speech synthesis when clicked
+    function startSpeech() {
+      const utterance = new SpeechSynthesisUtterance("Hello, I am SmartBot! How can I assist you today?");
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Remote control functions
+    function moveForward() {
+      // Add command to ESP32 or robot to move forward
+      console.log("Moving forward");
+    }
+
+    function moveBackward() {
+      // Add command to ESP32 or robot to move backward
+      console.log("Moving backward");
+    }
+
+    function turnLeft() {
+      // Add command to ESP32 or robot to turn left
+      console.log("Turning left");
+    }
+
+    function turnRight() {
+      // Add command to ESP32 or robot to turn right
+      console.log("Turning right");
     }
   </script>
 
