@@ -7,11 +7,12 @@
     <title>IoT-Integrated Robot</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
-            color: #333;
             margin: 0;
             padding: 0;
+            color: #333;
+            box-sizing: border-box;
         }
 
         header {
@@ -19,6 +20,11 @@
             padding: 20px;
             color: white;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
         }
 
         section {
@@ -30,11 +36,17 @@
             margin-bottom: 20px;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
             color: #4CAF50;
+            margin-bottom: 15px;
         }
 
         .button {
@@ -45,6 +57,7 @@
             margin-top: 10px;
             cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .button:hover {
@@ -59,6 +72,7 @@
             width: 100%;
             height: 400px;
             background-color: #ddd;
+            border-radius: 10px;
         }
 
         form {
@@ -76,7 +90,7 @@
             background-color: #fff;
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #log-container pre {
@@ -86,6 +100,62 @@
             font-family: "Courier New", Courier, monospace;
         }
 
+        #video-container {
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 10px;
+        }
+
+        #video-stream {
+            width: 100%;
+            height: 100%;
+        }
+
+        .navigation {
+            position: sticky;
+            top: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .navigation a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .navigation a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Mobile Support */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .feature {
+                padding: 15px;
+            }
+
+            .button {
+                padding: 8px 16px;
+            }
+
+            #3d-model-container {
+                height: 250px;
+            }
+
+            #video-container {
+                height: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -95,7 +165,14 @@
         <h1>IoT-Integrated Robot</h1>
     </header>
 
-    <section class="feature">
+    <div class="navigation">
+        <a href="#sensor-data">Sensor Data</a>
+        <a href="#3d-model-container">3D Model</a>
+        <a href="#video-container">Live Stream</a>
+        <a href="#log-container">Logs</a>
+    </div>
+
+    <section class="feature" id="sensor-data">
         <h2>Real-Time Sensor Data</h2>
         <div id="sensor-data">
             <p>Temperature: <span id="temp">Loading...</span></p>
@@ -103,7 +180,7 @@
         </div>
     </section>
 
-    <section class="feature">
+    <section class="feature" id="3d-model-container">
         <h2>Interactive 3D Model</h2>
         <div id="3d-model-container"></div>
     </section>
@@ -131,28 +208,13 @@
     </section>
 
     <section class="feature">
-        <h2>Settings</h2>
-        <form id="settings-form">
-            <label for="speed">Robot Speed:</label>
-            <input type="range" id="speed" name="speed" min="1" max="100" value="50">
-            <label for="resolution">Streaming Resolution:</label>
-            <select id="resolution" name="resolution">
-                <option value="720p">720p</option>
-                <option value="1080p">1080p</option>
-                <option value="480p">480p</option>
-            </select>
-            <button type="submit" class="button">Save Settings</button>
-        </form>
-    </section>
-
-    <section class="feature">
         <h2>Log Output</h2>
         <div id="log-container">
             <pre id="log-output">Logs will be displayed here...</pre>
         </div>
     </section>
 
-    <section class="feature">
+    <section class="feature" id="video-container">
         <h2>Live Video Stream</h2>
         <div id="video-container">
             <video id="video-stream" width="100%" controls autoplay></video>
@@ -221,15 +283,7 @@
             }, time * 1000);
         });
 
-        // 5. Settings
-        document.getElementById('settings-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const speed = document.getElementById('speed').value;
-            const resolution = document.getElementById('resolution').value;
-            console.log(`Speed: ${speed}, Resolution: ${resolution}`);
-        });
-
-        // 6. Log Output
+        // 5. Log Output
         function updateLog(message) {
             const logContainer = document.getElementById('log-output');
             logContainer.innerText += `\n${message}`;
@@ -238,11 +292,11 @@
         // Simulating log updates
         setInterval(() => updateLog('Robot is operational...'), 3000);
 
-        // 7. Live Video Stream
+        // 6. Live Video Stream
         const videoElement = document.getElementById('video-stream');
         videoElement.src = "http://<ESP32_IP>/stream"; // Replace with actual video stream URL
 
-        // 8. Speech Synthesis (Optional)
+        // 7. Speech Synthesis (Optional)
         function speakText(text) {
             const speech = new SpeechSynthesisUtterance(text);
             speechSynthesis.speak(speech);
@@ -255,6 +309,3 @@
 </body>
 
 </html>
-
-
-
