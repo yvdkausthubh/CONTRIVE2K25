@@ -1,316 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AI-powered IoT robot with remote control, speech synthesis, and live surveillance.">
-  <title>SmartBot: AI-Powered Robotics and IoT Integration</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #343a40;
-      padding: 20px;
-    }
-
-    nav .logo {
-      font-size: 24px;
-      color: white;
-      font-weight: 700;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li {
-      font-size: 18px;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: white;
-      transition: color 0.3s ease;
-    }
-
-    nav ul li a:hover {
-      color: #f39c12;
-    }
-
-    .hero {
-      height: 80vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-      background-color: #343a40;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    .hero p {
-      font-size: 20px;
-      margin-bottom: 30px;
-      line-height: 1.5;
-    }
-
-    .btn-primary {
-      padding: 15px 30px;
-      background-color: #f39c12;
-      border: none;
-      color: white;
-      font-size: 18px;
-      font-weight: 500;
-      cursor: pointer;
-      border-radius: 5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background-color: #e67e22;
-    }
-
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .section h2 {
-      font-size: 32px;
-      margin-bottom: 40px;
-      color: #333;
-      font-weight: 700;
-    }
-
-    .section p {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 30px;
-      line-height: 1.6;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .feature {
-      display: inline-block;
-      width: 28%;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .feature:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .feature i {
-      font-size: 50px;
-      color: #f39c12;
-      margin-bottom: 20px;
-    }
-
-    .feature h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .feature p {
-      font-size: 16px;
-      color: #666;
-    }
-
-    footer {
-      background-color: #343a40;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .hero h1 {
-        font-size: 36px;
-      }
-
-      .hero p {
-        font-size: 18px;
-      }
-
-      .feature {
-        width: 100%;
-        margin: 10px 0;
-      }
-
-      nav ul.active {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      nav ul li {
-        margin: 10px 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT-Integrated Robot Prototype</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #333;
+            font-size: 2em;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        .feature {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature h3 {
+            color: #2c3e50;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        .button:hover {
+            background-color: #2ecc71;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>IoT-Integrated Robot Prototype</h1>
+        <p>Showcasing Interactive Robotics with Display & Speech Functionality</p>
+    </header>
 
-  <!-- Navigation -->
-  <nav>
-    <div class="logo">SmartBot</div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="container">
+        <section class="feature">
+            <h2>System Components</h2>
+            <p>The IoT-integrated robot combines several advanced technologies for enhanced user interaction:</p>
+            <ul>
+                <li><strong>Display Module:</strong> Shows real-time information with auto-scrolling features.</li>
+                <li><strong>Speech Synthesis:</strong> Narrates the displayed content for hands-free interaction.</li>
+                <li><strong>ESP32-CAM for Surveillance:</strong> Provides real-time video streaming for monitoring and security.</li>
+                <li><strong>Wi-Fi and Bluetooth Communication:</strong> Remote control and integration into IoT ecosystems.</li>
+            </ul>
+        </section>
+
+        <section class="feature">
+            <h2>Interactive Features</h2>
+            <p>Users can interact with the robot through its display and speech system, making it ideal for educational and smart home applications. You can interact with it in real-time, learning about various domains like IoT, VLSI, and Robotics.</p>
+        </section>
+
+        <section class="feature">
+            <h2>Applications</h2>
+            <p>The robot is suited for various applications:</p>
+            <ul>
+                <li><strong>Smart Homes:</strong> Acts as a smart assistant and security system.</li>
+                <li><strong>Surveillance Systems:</strong> Uses the ESP32-CAM for real-time video streaming and monitoring.</li>
+                <li><strong>Educational Platforms:</strong> Demonstrates IoT, robotics, and automation concepts in educational settings.</li>
+                <li><strong>Industrial Automation:</strong> Monitors and controls systems in industrial environments.</li>
+            </ul>
+        </section>
+
+        <section class="feature">
+            <h2>Project Overview</h2>
+            <p>This IoT-integrated robot project demonstrates how modern technologies like IoT, robotics, speech synthesis, and smart displays can be effectively combined to create an interactive, functional, and scalable system.</p>
+        </section>
+
+        <section class="feature">
+            <h2>Try it Yourself</h2>
+            <p>Click below to get started and explore the capabilities of the IoT-integrated robot!</p>
+            <button class="button" onclick="alert('Demo coming soon!')">Start Demo</button>
+        </section>
     </div>
-    <ul id="menu">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#applications">Applications</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div>
-      <h1>SmartBot: AI-Powered IoT Robot</h1>
-      <p>Control, interact, and monitor with the SmartBot, equipped with AI, speech synthesis, and surveillance capabilities.</p>
-      <button class="btn-primary" onclick="startSpeech()">Get Speech</button>
-    </div>
-  </section>
+    <footer>
+        <p>&copy; 2025 IoT-Integrated Robot Project</p>
+    </footer>
 
-  <!-- About Section -->
-  <section id="about" class="section">
-    <h2>About the Project</h2>
-    <p>SmartBot is a state-of-the-art AI-powered robot that integrates Internet of Things (IoT) technologies and robotics. With voice interaction, surveillance capabilities, and remote control, SmartBot offers an intuitive and advanced solution for various applications. This robot is capable of making decisions in real-time through AI algorithms, interacting with users via voice synthesis, and streaming live video for remote monitoring. The combination of these features provides an immersive and highly functional experience, making SmartBot ideal for smart homes, security systems, and industrial automation.</p>
-  </section>
-
-  <!-- Features Section -->
-  <section id="features" class="section">
-    <h2>Features</h2>
-    <div class="feature">
-      <i class="fas fa-brain"></i>
-      <h3>AI-Driven Decisions</h3>
-      <p>SmartBot utilizes AI algorithms for real-time decision-making and autonomous actions based on the environment.</p>
-    </div>
-    <div class="feature">
-      <i class="fas fa-microphone"></i>
-      <h3>Voice Interaction</h3>
-      <p>Interact with SmartBot using voice commands, and hear responses via speech synthesis, creating a more immersive experience.</p>
-    </div>
-    <div class="feature">
-      <i class="fas fa-video"></i>
-      <h3>Surveillance with ESP32-CAM</h3>
-      <p>Live video streaming for security and monitoring, accessible remotely via Wi-Fi or Bluetooth.</p>
-      <!-- ESP32-CAM Feed -->
-      <iframe src="http://<ESP32_CAM_IP>/stream" width="100%" height="400" frameborder="0"></iframe>
-    </div>
-  </section>
-
-  <!-- Applications Section -->
-  <section id="applications" class="section">
-    <h2>Applications</h2>
-    <div class="feature">
-      <h3>Smart Homes</h3>
-      <p>Enhance your home with automation, surveillance, and voice-assisted controls. SmartBot can be integrated with other smart home devices for a seamless experience.</p>
-    </div>
-    <div class="feature">
-      <h3>Security Systems</h3>
-      <p>Utilize SmartBot for real-time video streaming and remote surveillance in various environments, keeping an eye on your home, office, or business.</p>
-    </div>
-    <div class="feature">
-      <h3>Industrial Automation</h3>
-      <p>Monitor and manage automated processes with integrated sensors and control systems, reducing human intervention and optimizing productivity.</p>
-    </div>
-  </section>
-
-  <!-- Footer Section -->
-  <footer>
-    <p>&copy; 2025 SmartBot. All rights reserved.</p>
-  </footer>
-
-  <!-- JavaScript -->
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('active');
-    }
-
-    function startSpeech() {
-      // Set up speech recognition
-      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-      recognition.lang = 'en-US';
-      recognition.start();
-
-      recognition.onresult = function(event) {
-        const spokenText = event.results[0][0].transcript;
-        respondToSpeech(spokenText);
-      };
-
-      recognition.onerror = function(event) {
-        alert('Error occurred in speech recognition: ' + event.error);
-      };
-    }
-
-    function respondToSpeech(query) {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = 'en-US';
-
-      if (query.toLowerCase().includes('hello')) {
-        speech.text = "Hello, how can I assist you today?";
-      } else if (query.toLowerCase().includes('features')) {
-        speech.text = "SmartBot has many features such as AI-driven decisions, voice interaction, and surveillance capabilities.";
-      } else if (query.toLowerCase().includes('applications')) {
-        speech.text = "SmartBot can be used in smart homes, security systems, and industrial automation.";
-      } else {
-        speech.text = "Sorry, I didn't understand your question. Please try again.";
-      }
-
-      window.speechSynthesis.speak(speech);
-    }
-  </script>
-
+    <script>
+        // Example JavaScript for interactions
+        function startDemo() {
+            alert('The demo is loading...');
+        }
+    </script>
 </body>
 </html>
+
