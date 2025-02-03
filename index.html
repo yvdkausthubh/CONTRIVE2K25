@@ -24,7 +24,8 @@
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 2em;
+            margin: 0;
         }
 
         section {
@@ -112,14 +113,15 @@
             height: 100%;
         }
 
+        /* Navigation Bar */
         .navigation {
-            position: sticky;
-            top: 0;
             background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
             z-index: 1000;
+            position: sticky;
+            top: 0;
         }
 
         .navigation a {
@@ -134,10 +136,28 @@
             color: black;
         }
 
-        /* Mobile Support */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            background-color: #fff;
+            width: 25px;
+            height: 3px;
+            margin: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Mobile Menu */
+        .menu {
+            display: flex;
+            justify-content: center;
+        }
+
         @media (max-width: 768px) {
             header h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
             }
 
             .feature {
@@ -155,6 +175,46 @@
             #video-container {
                 height: 200px;
             }
+
+            .navigation {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .navigation a {
+                padding: 10px 15px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .navigation a {
+                display: none;
+                flex-direction: column;
+                padding: 10px;
+                background-color: #333;
+            }
+
+            .navigation.active a {
+                display: flex;
+            }
+
+            .hamburger.open div:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.open div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open div:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            form {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -166,12 +226,25 @@
     </header>
 
     <div class="navigation">
-        <a href="#home">Home</a>
-        <a href="#sensor-data">Sensor Data</a>
-        <a href="#3d-model-container">3D Model</a>
-        <a href="#video-container">Live Stream</a>
-        <a href="#log-container">Logs</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="#home">Home</a>
+            <a href="#sensor-data">Sensor Data</a>
+            <a href="#3d-model-container">3D Model</a>
+            <a href="#video-container">Live Stream</a>
+            <a href="#log-container">Logs</a>
+        </div>
     </div>
+
+    <!-- Home Section -->
+    <section class="feature" id="home">
+        <h2>Welcome to the IoT-Integrated Robot Dashboard</h2>
+        <p>This dashboard allows you to control and monitor your IoT-integrated robot. You can view sensor data in real-time, control the robot, watch its live stream, and more!</p>
+    </section>
 
     <section class="feature" id="sensor-data">
         <h2>Real-Time Sensor Data</h2>
@@ -224,9 +297,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // 1. Real-Time Sensor Data
+        // Real-time sensor data
         function fetchSensorData() {
-            fetch('http://<ESP32_IP>/sensor_data') // Replace with actual endpoint
+            fetch('http://<ESP32_IP>/sensor_data')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('temp').innerText = data.temperature + ' °C';
@@ -237,7 +310,7 @@
 
         setInterval(fetchSensorData, 5000);
 
-        // 2. Interactive 3D Model
+        // 3D model interaction
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -260,7 +333,7 @@
 
         animate();
 
-        // 3. Control Panel
+        // Command handler
         function sendCommand(command) {
             fetch('http://<ESP32_IP>/command', {
                 method: 'POST',
@@ -274,37 +347,17 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        // 4. Schedule Robot Tasks
-        document.getElementById('schedule-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const task = document.getElementById('task').value;
-            const time = document.getElementById('time').value;
-            setTimeout(() => {
-                sendCommand(task);
-            }, time * 1000);
-        });
-
-        // 5. Log Output
-        function updateLog(message) {
-            const logContainer = document.getElementById('log-output');
-            logContainer.innerText += `\n${message}`;
+        // Menu toggle (hamburger)
+        function toggleMenu() {
+            const navigation = document.querySelector('.navigation');
+            navigation.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger');
+            hamburger.classList.toggle('open');
         }
 
-        // Simulating log updates
-        setInterval(() => updateLog('Robot is operational...'), 3000);
-
-        // 6. Live Video Stream
-        const videoElement = document.getElementById('video-stream');
-        videoElement.src = "http://<ESP32_IP>/stream"; // Replace with actual video stream URL
-
-        // 7. Speech Synthesis (Optional)
-        function speakText(text) {
-            const speech = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(speech);
-        }
-
-        // Test Speech Synthesis
-        speakText("Hello, this is your IoT robot speaking!");
+        // Video stream source
+        const video = document.getElementById('video-stream');
+        video.src = 'http://<ESP32_CAM_IP>/video_stream';
     </script>
 
 </body>
