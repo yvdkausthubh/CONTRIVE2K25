@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IoT-Integrated Robot Prototype</title>
     <style>
-        /* General Styles */
+        /* Basic Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -21,17 +21,6 @@
         .container {
             padding: 20px;
         }
-        h1 {
-            font-size: 2.5em;
-        }
-        h2 {
-            color: #333;
-            font-size: 2em;
-        }
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
         .feature {
             background-color: #fff;
             border-radius: 8px;
@@ -39,14 +28,9 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .feature h3 {
-            color: #2c3e50;
-        }
-        footer {
-            background-color: #333;
-            color: white;
+        .video-container {
             text-align: center;
-            padding: 10px;
+            margin-bottom: 20px;
         }
         .button {
             background-color: #27ae60;
@@ -65,46 +49,29 @@
 <body>
     <header>
         <h1>IoT-Integrated Robot Prototype</h1>
-        <p>Showcasing Interactive Robotics with Display & Speech Functionality</p>
     </header>
 
     <div class="container">
+        <!-- Live Stream Section -->
         <section class="feature">
-            <h2>System Components</h2>
-            <p>The IoT-integrated robot combines several advanced technologies for enhanced user interaction:</p>
-            <ul>
-                <li><strong>Display Module:</strong> Shows real-time information with auto-scrolling features.</li>
-                <li><strong>Speech Synthesis:</strong> Narrates the displayed content for hands-free interaction.</li>
-                <li><strong>ESP32-CAM for Surveillance:</strong> Provides real-time video streaming for monitoring and security.</li>
-                <li><strong>Wi-Fi and Bluetooth Communication:</strong> Remote control and integration into IoT ecosystems.</li>
-            </ul>
+            <h2>Live Stream</h2>
+            <div class="video-container">
+                <iframe src="http://<ESP32_IP>/stream" frameborder="0" width="640" height="480" allowfullscreen></iframe>
+            </div>
         </section>
 
+        <!-- Speech Synthesis Section -->
         <section class="feature">
-            <h2>Interactive Features</h2>
-            <p>Users can interact with the robot through its display and speech system, making it ideal for educational and smart home applications. You can interact with it in real-time, learning about various domains like IoT, VLSI, and Robotics.</p>
+            <h2>Speech Synthesis</h2>
+            <p id="text-to-speak">Welcome to the IoT Robot Prototype. This robot demonstrates live streaming, interactive displays, and real-time voice-based information.</p>
+            <button class="button" onclick="speakText()">Hear it!</button>
         </section>
 
+        <!-- Voice Control Section -->
         <section class="feature">
-            <h2>Applications</h2>
-            <p>The robot is suited for various applications:</p>
-            <ul>
-                <li><strong>Smart Homes:</strong> Acts as a smart assistant and security system.</li>
-                <li><strong>Surveillance Systems:</strong> Uses the ESP32-CAM for real-time video streaming and monitoring.</li>
-                <li><strong>Educational Platforms:</strong> Demonstrates IoT, robotics, and automation concepts in educational settings.</li>
-                <li><strong>Industrial Automation:</strong> Monitors and controls systems in industrial environments.</li>
-            </ul>
-        </section>
-
-        <section class="feature">
-            <h2>Project Overview</h2>
-            <p>This IoT-integrated robot project demonstrates how modern technologies like IoT, robotics, speech synthesis, and smart displays can be effectively combined to create an interactive, functional, and scalable system.</p>
-        </section>
-
-        <section class="feature">
-            <h2>Try it Yourself</h2>
-            <p>Click below to get started and explore the capabilities of the IoT-integrated robot!</p>
-            <button class="button" onclick="alert('Demo coming soon!')">Start Demo</button>
+            <h2>Voice Control</h2>
+            <p>Use voice commands to interact with the robot. Try saying "move forward" or "stop."</p>
+            <button class="button" onclick="startVoiceControl()">Activate Voice Control</button>
         </section>
     </div>
 
@@ -113,11 +80,31 @@
     </footer>
 
     <script>
-        // Example JavaScript for interactions
-        function startDemo() {
-            alert('The demo is loading...');
+        // Speech Synthesis Function
+        function speakText() {
+            const text = document.getElementById('text-to-speak').innerText;
+            const speech = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(speech);
+        }
+
+        // Voice Control Function using annyang.js
+        function startVoiceControl() {
+            if (annyang) {
+                const commands = {
+                    'move forward': function() { alert("Moving forward!"); },
+                    'move backward': function() { alert("Moving backward!"); },
+                    'stop': function() { alert("Stopping robot!"); }
+                };
+
+                annyang.addCommands(commands);
+                annyang.start();
+            } else {
+                alert("Voice control is not supported on this browser.");
+            }
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 </body>
 </html>
+
 
