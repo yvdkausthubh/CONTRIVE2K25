@@ -153,29 +153,6 @@
       color: #666;
     }
 
-    .remote-controls {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .remote-controls button {
-      padding: 15px 25px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      font-size: 18px;
-      font-weight: 500;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-
-    .remote-controls button:hover {
-      background-color: #0056b3;
-    }
-
     footer {
       background-color: #343a40;
       color: white;
@@ -204,10 +181,6 @@
       .feature, .application {
         width: 100%;
         margin: 10px 0;
-      }
-
-      .remote-controls {
-        flex-direction: column;
       }
 
       nav ul.active {
@@ -254,7 +227,7 @@
   <!-- About Section -->
   <section id="about" class="section">
     <h2>About the Project</h2>
-    <p>SmartBot is a state-of-the-art AI-powered robot that integrates Internet of Things (IoT) technologies and robotics. With voice interaction, surveillance capabilities, and remote control, SmartBot offers an intuitive and advanced solution for various applications.</p>
+    <p>SmartBot is a state-of-the-art AI-powered robot that integrates Internet of Things (IoT) technologies and robotics. With voice interaction, surveillance capabilities, and remote control, SmartBot offers an intuitive and advanced solution for various applications. This robot is capable of making decisions in real-time through AI algorithms, interacting with users via voice synthesis, and streaming live video for remote monitoring. The combination of these features provides an immersive and highly functional experience, making SmartBot ideal for smart homes, security systems, and industrial automation.</p>
   </section>
 
   <!-- Features Section -->
@@ -275,17 +248,8 @@
       <h3>Surveillance with ESP32-CAM</h3>
       <p>Live video streaming for security and monitoring, accessible remotely via Wi-Fi or Bluetooth.</p>
       <!-- ESP32-CAM Feed -->
-      <!-- Replace <ESP32_CAM_IP> with the actual IP of your ESP32-CAM -->
       <iframe src="http://<ESP32_CAM_IP>/stream" width="100%" height="400" frameborder="0"></iframe>
     </div>
-  </section>
-
-  <!-- Remote Control Section -->
-  <section class="remote-controls">
-    <button onclick="moveForward()">Move Forward</button>
-    <button onclick="moveBackward()">Move Backward</button>
-    <button onclick="turnLeft()">Turn Left</button>
-    <button onclick="turnRight()">Turn Right</button>
   </section>
 
   <!-- Applications Section -->
@@ -320,30 +284,6 @@
 
     function startSpeech() {
       const speech = new SpeechSynthesisUtterance("Welcome to SmartBot! You can interact with me using voice commands or control me manually.");
-      speech.lang = 'en-US';
-      window.speechSynthesis.speak(speech);
-    }
-
-    function moveForward() {
-      const speech = new SpeechSynthesisUtterance("Moving forward...");
-      speech.lang = 'en-US';
-      window.speechSynthesis.speak(speech);
-    }
-
-    function moveBackward() {
-      const speech = new SpeechSynthesisUtterance("Moving backward...");
-      speech.lang = 'en-US';
-      window.speechSynthesis.speak(speech);
-    }
-
-    function turnLeft() {
-      const speech = new SpeechSynthesisUtterance("Turning left...");
-      speech.lang = 'en-US';
-      window.speechSynthesis.speak(speech);
-    }
-
-    function turnRight() {
-      const speech = new SpeechSynthesisUtterance("Turning right...");
       speech.lang = 'en-US';
       window.speechSynthesis.speak(speech);
     }
