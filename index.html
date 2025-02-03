@@ -1,110 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IoT-Integrated Robot Prototype</title>
+    <title>IoT-Integrated Robot</title>
     <style>
-        /* Basic Styles */
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
         }
+
         header {
-            background-color: #333;
+            background-color: #4CAF50;
+            padding: 20px;
             color: white;
             text-align: center;
+        }
+
+        section {
             padding: 20px;
         }
-        .container {
-            padding: 20px;
-        }
+
         .feature {
             background-color: #fff;
-            border-radius: 8px;
+            margin-bottom: 20px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .video-container {
-            text-align: center;
-            margin-bottom: 20px;
+
+        h2 {
+            color: #4CAF50;
         }
+
         .button {
-            background-color: #27ae60;
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 10px;
             cursor: pointer;
-            font-size: 1.1em;
+            border-radius: 5px;
         }
+
         .button:hover {
-            background-color: #2ecc71;
+            background-color: #45a049;
         }
+
+        #sensor-data p {
+            font-size: 1.2em;
+        }
+
+        #3d-model-container {
+            width: 100%;
+            height: 400px;
+            background-color: #ddd;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label,
+        form input,
+        form select {
+            margin-bottom: 10px;
+        }
+
+        #log-container {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #log-container pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+        }
+
     </style>
 </head>
+
 <body>
+
     <header>
-        <h1>IoT-Integrated Robot Prototype</h1>
+        <h1>IoT-Integrated Robot</h1>
     </header>
 
-    <div class="container">
-        <!-- Live Stream Section -->
-        <section class="feature">
-            <h2>Live Stream</h2>
-            <div class="video-container">
-                <iframe src="http://<ESP32_IP>/stream" frameborder="0" width="640" height="480" allowfullscreen></iframe>
-            </div>
-        </section>
+    <section class="feature">
+        <h2>Real-Time Sensor Data</h2>
+        <div id="sensor-data">
+            <p>Temperature: <span id="temp">Loading...</span></p>
+            <p>Motion: <span id="motion">Loading...</span></p>
+        </div>
+    </section>
 
-        <!-- Speech Synthesis Section -->
-        <section class="feature">
-            <h2>Speech Synthesis</h2>
-            <p id="text-to-speak">Welcome to the IoT Robot Prototype. This robot demonstrates live streaming, interactive displays, and real-time voice-based information.</p>
-            <button class="button" onclick="speakText()">Hear it!</button>
-        </section>
+    <section class="feature">
+        <h2>Interactive 3D Model</h2>
+        <div id="3d-model-container"></div>
+    </section>
 
-        <!-- Voice Control Section -->
-        <section class="feature">
-            <h2>Voice Control</h2>
-            <p>Use voice commands to interact with the robot. Try saying "move forward" or "stop."</p>
-            <button class="button" onclick="startVoiceControl()">Activate Voice Control</button>
-        </section>
-    </div>
+    <section class="feature">
+        <h2>Control Panel</h2>
+        <button class="button" onclick="sendCommand('move_forward')">Move Forward</button>
+        <button class="button" onclick="sendCommand('move_backward')">Move Backward</button>
+        <button class="button" onclick="sendCommand('rotate')">Rotate</button>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 IoT-Integrated Robot Project</p>
-    </footer>
+    <section class="feature">
+        <h2>Schedule Robot Tasks</h2>
+        <form id="schedule-form">
+            <label for="task">Task:</label>
+            <select id="task" name="task">
+                <option value="move_forward">Move Forward</option>
+                <option value="move_backward">Move Backward</option>
+                <option value="rotate">Rotate</option>
+            </select>
+            <label for="time">Time (seconds):</label>
+            <input type="number" id="time" name="time" min="1">
+            <button type="submit" class="button">Schedule Task</button>
+        </form>
+    </section>
 
+    <section class="feature">
+        <h2>Settings</h2>
+        <form id="settings-form">
+            <label for="speed">Robot Speed:</label>
+            <input type="range" id="speed" name="speed" min="1" max="100" value="50">
+            <label for="resolution">Streaming Resolution:</label>
+            <select id="resolution" name="resolution">
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+                <option value="480p">480p</option>
+            </select>
+            <button type="submit" class="button">Save Settings</button>
+        </form>
+    </section>
+
+    <section class="feature">
+        <h2>Log Output</h2>
+        <div id="log-container">
+            <pre id="log-output">Logs will be displayed here...</pre>
+        </div>
+    </section>
+
+    <section class="feature">
+        <h2>Live Video Stream</h2>
+        <div id="video-container">
+            <video id="video-stream" width="100%" controls autoplay></video>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Speech Synthesis Function
-        function speakText() {
-            const text = document.getElementById('text-to-speak').innerText;
+        // 1. Real-Time Sensor Data
+        function fetchSensorData() {
+            fetch('http://<ESP32_IP>/sensor_data') // Replace with actual endpoint
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temp').innerText = data.temperature + ' °C';
+                    document.getElementById('motion').innerText = data.motion ? 'Detected' : 'Not Detected';
+                })
+                .catch(err => console.error('Error fetching data:', err));
+        }
+
+        setInterval(fetchSensorData, 5000);
+
+        // 2. Interactive 3D Model
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('3d-model-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // 3. Control Panel
+        function sendCommand(command) {
+            fetch('http://<ESP32_IP>/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command: command })
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 4. Schedule Robot Tasks
+        document.getElementById('schedule-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const task = document.getElementById('task').value;
+            const time = document.getElementById('time').value;
+            setTimeout(() => {
+                sendCommand(task);
+            }, time * 1000);
+        });
+
+        // 5. Settings
+        document.getElementById('settings-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const speed = document.getElementById('speed').value;
+            const resolution = document.getElementById('resolution').value;
+            console.log(`Speed: ${speed}, Resolution: ${resolution}`);
+        });
+
+        // 6. Log Output
+        function updateLog(message) {
+            const logContainer = document.getElementById('log-output');
+            logContainer.innerText += `\n${message}`;
+        }
+
+        // Simulating log updates
+        setInterval(() => updateLog('Robot is operational...'), 3000);
+
+        // 7. Live Video Stream
+        const videoElement = document.getElementById('video-stream');
+        videoElement.src = "http://<ESP32_IP>/stream"; // Replace with actual video stream URL
+
+        // 8. Speech Synthesis (Optional)
+        function speakText(text) {
             const speech = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(speech);
+            speechSynthesis.speak(speech);
         }
 
-        // Voice Control Function using annyang.js
-        function startVoiceControl() {
-            if (annyang) {
-                const commands = {
-                    'move forward': function() { alert("Moving forward!"); },
-                    'move backward': function() { alert("Moving backward!"); },
-                    'stop': function() { alert("Stopping robot!"); }
-                };
-
-                annyang.addCommands(commands);
-                annyang.start();
-            } else {
-                alert("Voice control is not supported on this browser.");
-            }
-        }
+        // Test Speech Synthesis
+        speakText("Hello, this is your IoT robot speaking!");
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+
 </body>
+
 </html>
+
 
 
