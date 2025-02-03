@@ -279,8 +279,35 @@
     }
 
     function startSpeech() {
-      const speech = new SpeechSynthesisUtterance("Welcome to SmartBot! I'm here to help you with voice commands, control, and surveillance. Ask me anything or interact with me for a smarter experience.");
+      // Set up speech recognition
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        const spokenText = event.results[0][0].transcript;
+        respondToSpeech(spokenText);
+      };
+
+      recognition.onerror = function(event) {
+        alert('Error occurred in speech recognition: ' + event.error);
+      };
+    }
+
+    function respondToSpeech(query) {
+      const speech = new SpeechSynthesisUtterance();
       speech.lang = 'en-US';
+
+      if (query.toLowerCase().includes('hello')) {
+        speech.text = "Hello, how can I assist you today?";
+      } else if (query.toLowerCase().includes('features')) {
+        speech.text = "SmartBot has many features such as AI-driven decisions, voice interaction, and surveillance capabilities.";
+      } else if (query.toLowerCase().includes('applications')) {
+        speech.text = "SmartBot can be used in smart homes, security systems, and industrial automation.";
+      } else {
+        speech.text = "Sorry, I didn't understand your question. Please try again.";
+      }
+
       window.speechSynthesis.speak(speech);
     }
   </script>
