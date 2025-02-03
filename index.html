@@ -319,23 +319,33 @@
     }
 
     function startSpeech() {
-      alert('Speech interaction initiated.');
+      const speech = new SpeechSynthesisUtterance("Welcome to SmartBot! You can interact with me using voice commands or control me manually.");
+      speech.lang = 'en-US';
+      window.speechSynthesis.speak(speech);
     }
 
     function moveForward() {
-      alert('Moving forward...');
+      const speech = new SpeechSynthesisUtterance("Moving forward...");
+      speech.lang = 'en-US';
+      window.speechSynthesis.speak(speech);
     }
 
     function moveBackward() {
-      alert('Moving backward...');
+      const speech = new SpeechSynthesisUtterance("Moving backward...");
+      speech.lang = 'en-US';
+      window.speechSynthesis.speak(speech);
     }
 
     function turnLeft() {
-      alert('Turning left...');
+      const speech = new SpeechSynthesisUtterance("Turning left...");
+      speech.lang = 'en-US';
+      window.speechSynthesis.speak(speech);
     }
 
     function turnRight() {
-      alert('Turning right...');
+      const speech = new SpeechSynthesisUtterance("Turning right...");
+      speech.lang = 'en-US';
+      window.speechSynthesis.speak(speech);
     }
   </script>
 
